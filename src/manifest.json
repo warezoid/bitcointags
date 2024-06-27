@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Bitcointags",
+  "version": "1.0",
+  "description": "Calculates a price of selected element to bitcoin.",
+  "action": {
+    "default_icon": {
+      "16": "img/icons/bitcointags_logo16.png",
+      "48": "img/icons/bitcointags_logo48.png",
+      "128": "img/icons/bitcointags_logo128.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Bitcointags"
+  },
+  "icons": {
+    "16": "img/icons/bitcointags_logo16.png",
+    "48": "img/icons/bitcointags_logo48.png",
+    "128": "img/icons/bitcointags_logo128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "img/*",
+        "style.css",
+        "script.js",
+        "popup.html",
+        "popup.js",
+        "BakbakOne-Regular.ttf"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["script.js"]
+    }
+  ],
+  "permissions": ["storage", "tabs"]
+}

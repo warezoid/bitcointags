@@ -1,0 +1,543 @@
+*{
+  user-select: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face{
+  src: url(BakbakOne-Regular.ttf);
+  font-family: Bakbak One;
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.flexbox-full{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexbox-half{
+  display: flex;
+  justify-content: center;
+}
+
+.boxShadow-hover:hover{
+  box-shadow: 0 0 10px #444444;
+  transition: box-shadow 0.5s;
+}
+
+
+.active{
+  background: linear-gradient(135deg, #ff7b00, #f59119, #ffae00);
+  color: #ffffff;
+}
+
+
+.main-container{
+  pointer-events: none;
+  width: 570px;
+  height: 380px;
+  position: relative;
+  overflow: hidden;
+  background: #262626;
+  font-family: Bakbak One;
+  font-size: 24px;
+}
+
+
+#main-form-container{
+  opacity: 0;
+}
+
+.main-btn-container{
+  gap: 30px;
+  padding-top: 40px;
+}
+
+.btn-container{
+  width: 230px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 2px solid #444444;
+  background: #333333;
+  color: #666666;
+  transition: opacity 0.5s;
+}
+
+.btn-half{
+  width: 115px;
+}
+.btn-half:nth-child(odd){
+  border-right: 1px solid #444444;
+}
+.btn-half:nth-child(even){
+  border-left: 1px solid #444444;
+}
+.btn-half:hover{
+  text-shadow: 0 0 8px;
+  transition: text-shadow 0.5s;
+  cursor: pointer;
+}
+
+#main-textbox-container{
+  pointer-events: none;
+  padding-top: 30px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.textbox-container{
+  width: 490px;
+  height: 50px;
+  border-radius: 16px;
+  border: 2px solid #444444;
+  background: #333333;
+  color: #666666;
+}
+
+#textbox-text{
+  width: 160px;
+  height: 50px;
+  border-right: 1px solid #444444;
+}
+#textbox-text:hover{
+  cursor: help;
+}
+
+.textbox-input{
+  width: 330px;
+  height: 50px;
+  overflow: hidden;
+  border-left: 1px solid #444444;
+}
+
+#textbox-value{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#textbox-value::after{
+  content: "Maximum amount of satoshi for satsmode display, ranging from 1 to 999 999 999 inclusive.";
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  font-size: 12px;
+  text-align: center;
+  text-shadow: none;
+  transform: translateY(-100%);
+}
+#textbox-value:hover,
+#textbox-value:active,
+#textbox-value:focus{
+  cursor: text;
+  outline: none;
+  text-shadow: 0 0 8px #666666;
+  transition: text-shadow 0.5s;
+}
+#textbox-value::selection{
+  background: transparent;
+}
+
+#saveBtn-container{
+  width: 100%;
+  position: absolute;
+  bottom: 180px;
+}
+
+#saveBtn{
+  width: 490px;
+  height: 50px;
+  border-radius: 16px;
+}
+#saveBtn:hover{
+  cursor: pointer;
+  box-shadow: 0 0 10px #f59119;
+  text-shadow: 0 0 8px #ffffff;   
+  transition: 0.5s;
+}
+
+
+#main-loading-container{
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  gap: 30px;
+  position: absolute;
+  top: 0;
+  opacity: 1;
+}
+
+#main-blocks-container{
+  height: 40px;
+  gap: 50px;
+  position: relative;
+}
+#main-blocks-container::after{
+  content: "";
+  width: 320px;
+  height: 5px;
+  position: absolute;
+  border-radius: 12px;
+  background: #444444;
+  box-shadow: 0 0 10px #444444;
+}
+
+.blocks-container{
+  width: 220px;
+  height: 40px;
+  position: relative;
+}
+
+.block{
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  position: absolute;
+  z-index: 1000;
+  border-radius: 12px;
+  background: #333333;
+  box-shadow: 0 0 10px #333333;
+}
+.block:last-child{
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.block.active{
+  background: linear-gradient(135deg, #ff7b00, #f59119, #ffae00);
+  box-shadow: 0 0 10px #f59119;
+}
+
+.hashText-container{
+  width: 450px;
+  position: relative;
+  font-size: 12px;
+  color: #444444;
+  text-shadow: 0 0 10px;
+}
+
+.hashText{
+  width: 100%;
+  position: absolute;
+}
+
+.hashText:last-child{
+  opacity: 0;
+}
+
+
+#main-status-container{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
+
+.status-container{
+  width: 60%;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  text-align: center;
+}
+
+.status-container > img{
+  width: 50px;
+}
+
+.status-text{
+  font-size: 16px;
+  color: #666666;
+  text-shadow: 0 0 10px #666666;
+}
+
+
+.main-links-container{
+  pointer-events: auto;
+  width: 100%;
+  flex-direction: column;
+  position: absolute;
+  bottom: 10px;
+}
+
+.github-logo{
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+.github-logo:hover{
+  filter: brightness(1.2);
+  transition: filter 0.5s;
+}
+
+.quote-text{
+  font-size: 12px;
+  font-style: italic;
+  color: #444444;
+}
+
+
+@keyframes replaceContainers{
+  0%{
+      opacity: 1;
+  }
+
+  100%{
+      opacity: 0;
+  }
+}
+
+@keyframes slideDown{
+  0%{
+      transform: translateY(0%);
+  }
+
+  100%{
+      transform: translateY(100%);
+  }
+}
+
+@keyframes slideUp{
+  0%{
+      transform: translateY(100%);
+  }
+
+  100%{
+      transform: translateY(0%);
+  }
+}
+
+@keyframes smoothIn{
+  0%{
+      bottom: 100px;
+  }
+
+  20%{
+      bottom: 95px;
+  }
+
+  100%{
+      bottom: 180px;
+  }
+}
+
+@keyframes smoothOut{
+  0%{
+      bottom: 180px;
+  }
+
+  20%{
+      bottom: 185px;
+  }
+
+  100%{
+      bottom: 100px;
+  }
+}
+
+@keyframes errorShake{
+  0%{
+    transform: translateX(0px);
+  }
+
+  25%{
+      transform: translateX(5px);
+  }
+
+  50%{
+      transform: translateX(0px);
+  }
+
+  75%{
+      transform: translateX(-5px);
+  }
+
+  100%{
+    transform: translateX(0px);
+  }
+}
+
+@keyframes squeeze{
+  0%{
+      transform: scale(1);
+  }
+
+  50%{
+      transform: scale(0.96);
+  }
+
+  100%{
+      transform: scale(1);
+  }
+}
+
+@keyframes moveLeft{
+  0%{
+      transform: translateX(0px);
+  }
+
+  15%{
+      transform: translateX(2px);
+  }
+
+  100%{
+      transform: translateX(-90px);
+  }
+}
+
+@keyframes fadeOut{
+  0%{
+      transform: translateX(0px);
+  }
+
+  15%{
+      transform: translateX(2px) scale(1);
+  }
+
+  30%{
+      opacity: 1;
+  }
+
+  60%{
+      opacity: 0;
+  }
+
+  100%{
+      transform: translateX(-90px) scale(0.5);
+      opacity: 0;
+  }
+}
+
+@keyframes fadeIn{
+  0%{
+      transform: translateX(0px);
+  }
+
+  15%{
+      transform: translateX(2px) scale(0.5);
+  }
+
+  30%{
+      opacity: 0;
+  }
+
+  60%{
+      opacity: 1;
+  }
+
+  100%{
+      transform: translateX(-90px) scale(1);
+      opacity: 1;
+  }
+}
+
+@keyframes slideOut{
+  0%{
+      transform: translateX(0px);
+  }
+  
+  15%{
+      transform: translateX(2px);
+  }
+  
+  30%{
+      opacity: 1;
+  }
+  
+  60%{
+      opacity: 0;
+  }
+  
+  100%{
+      transform: translateX(-500px);
+      opacity: 0;
+  }
+}
+
+@keyframes slideIn{
+  0%{
+      transform: translateX(0px);
+  }
+
+  15%{
+      transform: translateX(2px);
+  }
+
+  30%{
+      opacity: 0;
+  }
+
+  60%{
+      opacity: 1;
+  }
+
+  100%{
+      transform: translateX(-500px);
+      opacity: 1;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/*
+
+    Created by warezoid with the love of freedom and numbers.
+
+
+
+
+
+    MIT License
+
+    Copyright © 2024 warezoid
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+
+
+    SOURCES
+
+    Sources can be seen as links to products used in Bitcointags, including APIs, graphics, research tools and of course Bitcoin, without which this project and many others would not exist. I have chosen not to list elementary products such as HTML, CSS, JavaScript and many others.
+    
+    1. Graphics
+        1.1. Bitcoin - logo and product as a whole: [ bitcoin.org ]
+        1.2. Github - logo and space for collaboration: [ github.com ]
+        1.3. Icons8 - colourful github logo: [ icons8.com ]
+        1.4. Google fonts - font used in Bitcointags: [ fonts.google.com ]
+            1.4.1 Bakbak One - specific font used in Bitcointags: [ fonts.google.com/specimen/Bakbak+One?query=Bakbak+one ]
+
+    2. APIs
+        2.1. Coincap API 2.0 - used to get the price of bitcoin and rate of fiat currencies: [ docs.coincap.io ]
+        2.2. Web Crypto API - used to calculate the checksum: [ www.w3.org/TR/WebCryptoAPI ]
+        2.3. Chrome APIs
+            2.3.1. Storage API - used to save the user profile: [ developer.chrome.com/docs/extensions/reference/api/storage ]
+            2.3.2. Tabs API - used for communication between popup and backround script: [ developer.chrome.com/docs/extensions/reference/api/tabs ]
+            2.3.3. Runtime API - used for communication between popup and backround script: [ developer.chrome.com/docs/extensions/reference/api/runtime ]
+
+    3. Research tools
+        3.1. ChatGPT: [ chatgpt.com ]
+        3.2. Stackoverflow: [ stackoverflow.com ]
+        3.3. And the internet itself.ED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/

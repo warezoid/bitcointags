@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Bitcointags | Settings</title>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="main-container">
+            <div id="main-form-container">
+                <div class="main-btn-container flexbox-half">
+                    <div id="extensionEnable" class="btn-container flexbox-half boxShadow-hover">
+                        <span class="1 btn-half flexbox-full active">ON</span>
+                        <span class="0 btn-half flexbox-full">OFF</span>
+                    </div>
+    
+                    <div id="btcModeEnable" class="btn-container flexbox-half boxShadow-hover">
+                        <span class="1 btn-half flexbox-full active">BTC</span>
+                        <span class="0 btn-half flexbox-full">SATS</span>
+                    </div>
+                </div>
+    
+                <div id="main-textbox-container" class="flexbox-half">
+                    <div class="textbox-container flexbox-full boxShadow-hover">
+                        <span id="textbox-text" class="flexbox-full">MAX</span>
+    
+                        <div class="textbox-input flexbox-full">
+                            <span id="textbox-value" class="flexbox-full" contenteditable="true">9 999 999</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div id="saveBtn-container" class="flexbox-half">
+                    <span id="saveBtn" class="flexbox-full active">SAVE</span>
+                </div>
+            </div>
+
+
+
+            <div id="main-loading-container" class="flexbox-full">
+                <div id="main-blocks-container" class="flexbox-full">
+                    <div class="blocks-container">
+                        <div class="block"></div>
+                        <div class="block" style="left: 90px;"></div>
+                        <div class="block active" style="left: 180px;"></div>
+                        <div class="block" style="left: 270px;"></div>
+                    </div>
+                </div>
+                
+                <div class="hashText-container">
+                    <span class="hashText flexbox-full">0x000000006a625f06636b8bb6ac7b960a8d03705d1ace08b1a19da3fdcc99ddbd</span>
+                    <span class="hashText flexbox-full" style="left: 500px;">0x00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048</span>
+                </div>
+            </div>
+
+
+
+            <div id="main-status-container" class="flexbox-full">
+                <div id="ok-status-container" class="status-container flexbox-full">
+                    <img src="./img/checkmark_icon.png" alt="Checkmark icon.">
+                    <span class="status-text">Data processing was successful.</span>
+                </div>
+
+                <div id="error-status-container" class="status-container flexbox-full">
+                    <img src="./img/alert_icon.png" alt="Alert icon.">            
+                    <span class="status-text">Error occurred during data processing. Default or previous data will be used.</span>
+                </div>
+            </div>
+
+
+            
+            <div class="main-links-container flexbox-full">
+                <a href="https://github.com/" target="_blank">
+                    <img src="./img/github_logo.png" alt="Github logo." class="github-logo">
+                </a>
+                
+                <span class="quote-text">“created with the love of freedom and numbers”</span>
+            </div>
+        </div>
+
+
+
+
+
+        <script src="popup.js"></script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<!--
+
+    Created by warezoid with the love of freedom and numbers.
+
+
+
+
+
+    MIT License
+
+    Copyright © 2024 warezoid
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+
+
+    SOURCES
+
+    Sources can be seen as links to products used in Bitcointags, including APIs, graphics, research tools and of course Bitcoin, without which this project and many others would not exist. I have chosen not to list elementary products such as HTML, CSS, JavaScript and many others.
+    
+    1. Graphics
+        1.1. Bitcoin - logo and product as a whole: [ bitcoin.org ]
+        1.2. Github - logo and space for collaboration: [ github.com ]
+        1.3. Icons8 - colourful github logo: [ icons8.com ]
+        1.4. Google fonts - font used in Bitcointags: [ fonts.google.com ]
+            1.4.1 Bakbak One - specific font used in Bitcointags: [ fonts.google.com/specimen/Bakbak+One?query=Bakbak+one ]
+
+    2. APIs
+        2.1. Coincap API 2.0 - used to get the price of bitcoin and rate of fiat currencies: [ docs.coincap.io ]
+        2.2. Web Crypto API - used to calculate the checksum: [ www.w3.org/TR/WebCryptoAPI ]
+        2.3. Chrome APIs
+            2.3.1. Storage API - used to save the user profile: [ developer.chrome.com/docs/extensions/reference/api/storage ]
+            2.3.2. Tabs API - used for communication between popup and backround script: [ developer.chrome.com/docs/extensions/reference/api/tabs ]
+            2.3.3. Runtime API - used for communication between popup and backround script: [ developer.chrome.com/docs/extensions/reference/api/runtime ]
+
+    3. Research tools
+        3.1. ChatGPT: [ chatgpt.com ]
+        3.2. Stackoverflow: [ stackoverflow.com ]
+        3.3. And the internet itself.
+
+-->
