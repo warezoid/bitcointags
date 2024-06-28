@@ -26,8 +26,10 @@ style.textContent = `
         background-color: #262626;
         border-radius: 16px;
         line-height: normal;
-        font-family: 'Bakbak One', sans-serif;
-        color: #FFFFFF;
+    }
+
+    #bitcointags-mainContainer *{
+        font-family: Bakbak One, sans-serif !important;
     }
 
     .bitcointags-active{
@@ -108,6 +110,10 @@ style.textContent = `
         padding-right: 10px;
         text-align: right;
     }
+    
+    .bitcointags-main-textContainer{
+        color: #ffffff;
+    }
 
     .bitcointags-main-goodsPriceContainer{
         display: flex;
@@ -144,6 +150,9 @@ style.textContent = `
         position: absolute;
         top: 0;
         opacity: 0;
+    }
+    
+    #bitcointags-error-container *{
         color: #da1e37;
     }
 
