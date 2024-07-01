@@ -1047,6 +1047,8 @@ const repeatLoadingStep = () => {
 /*
 
     Created by warezoid with the love of freedom and numbers.
+    
+    I would like to thank my friends for their help in developing Bitcointags, whether it be through advice, design choices or sharing their opinions. And, of course, to Satoshi Nakamoto for Bitcoin, a project that opened the door to a world of possibilities and financial freedom. We are all Satoshi.
 
 
 
@@ -1088,6 +1090,7 @@ const repeatLoadingStep = () => {
     3. Research tools
         3.1. ChatGPT: [ chatgpt.com ]
         3.2. Stackoverflow: [ stackoverflow.com ]
-        3.3. And the internet itself.OFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+        3.3. DeepL: [ https://www.deepl.com ]
+        3.4. And the internet itself.
 
 */
