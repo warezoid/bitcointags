@@ -11,7 +11,6 @@ The price returned by Bitcointags is indicative only. The exchange rate is const
 
 ## Coming soon...
 - Complete extensive documentation.
-- Firefox version.
 - Select&convert mode.
 - It tells you whether the e-shop accepts bitcoins.
 
@@ -23,33 +22,67 @@ Bitcointags is licensed under the MIT license. The full text of the license can 
 
 
 ## Installation
-Bitcointags is currently only available for browsers with [Chromium Core](https://github.com/chromium/chromium) and is not listed in the Chrome Web Store. The reason for this can be found in the [FAQ](#faq) section. 
+Bitcointags are available for browsers with the [**Chromium core**](https://www.chromium.org) (Google Chrome, Microsoft Edge, Opera...) and [**Mozilla Firefox**](https://www.mozilla.org/en-US/firefox).
 
-1. Source files installation
-Click **Code** and select **Download ZIP** or use the command line with [Git](https://git-scm.com/). **Unzip the downloaded file.**
-    ```
-    git clone https://github.com/warezoid/bitcointags.git
-    ```
+Installing Bitcointags in different browsers may vary slightly, but the first few steps are always the same, so I decided to describe the installation and modification of the source folders together.
 
-2. Extensions window
+Bitcointags is not yet available in the [Chrome Web Store](https://chromewebstore.google.com/) or [Mozilla Add-ons](https://addons.mozilla.org/en-US/firefox/). I'm working on adding them to [Mozilla Add-ons](https://addons.mozilla.org/en-US/firefox/), but I won't personally add Bitcointags to the [Chrome Web Store](https://chromewebstore.google.com/). The reason can be found in the [FAQ](#faq) section. Still, Bitcointags can be added to the browser using the **temporary add-on** for Mozilla Firefox and **developer mode** for Chromium browsers.
+
+
+#### 1. Source files installation
+Click **Code** and select **Download ZIP** or use the command line with [Git](https://git-scm.com/).
+
+```
+git clone https://github.com/warezoid/bitcointags.git
+```
+
+#### 2. Source files modification
+**Unzip the downloaded file.** Then open it and **delete** or **move** folders and files to get the following structure.
+
+```
+src/
+    img/
+    mainfest.json
+    BakbakOne-Regular.ttf
+    popup.html
+    popup.js
+    script.js  
+    style.css
+```
+
+**Notes**
+- Select the manifest according to your browser type.
+- Do not delete any files or folders in **img** folder.
+
+
+### Chromium browsers
+#### 1. Extensions window
 Open your browser and in the address bar type:
-    ```
-    <your_browser>://extensions
-    ```
-    A few examples:
-    ```
-    chrome://extensions
-    edge://extensions
-    opera://extensions
-    ```
 
-3. Developer mode
+```
+<your_browser>://extensions
+```
+
+A few examples:
+
+```
+chrome://extensions
+edge://extensions
+opera://extensions
+```
+
+
+#### 2. Developer mode
 Find **Developer mode** and if it is not activated, activate it.
 
-4. Adding Bitcointags
-After that click the **Load unpacked** button and select the **src** folder located in the folder you downloaded in the **first step**.
+#### 3. Adding Bitcointags
+After that click the **Load unpacked** button and select the **src** folder you downloaded and edited earlier.
 
-5. Bitcointags is ready to use.
+#### 4. Bitcointags for Chromium browsers is ready to use.
+
+
+### Mozila Firefox
+#### 1. Guide for Mozila Firefox comming soon...
 
 
 
