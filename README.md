@@ -1,11 +1,11 @@
 # Bitcointags
 Bitcointags is a browser extension that converts the fiat price of a product or service within a selected HTML entity into an approximate bitcoin price.
 
-**Use case**
-Many e-shops do not yet accept payments in bitcoins, and if they do, most do not display the price of the product or service in bitcoins. For this reason, the Bitcointags project was created.
+- **Use case**
+    - Many e-shops do not yet accept payments in bitcoins, and if they do, most do not display the price of the product or service in bitcoins. For this reason, the Bitcointags project was created.
 
-**Disclaimer**
-The price returned by Bitcointags is indicative only. The exchange rate is constantly changing and bitcoin does not have a uniform price. Therefore, the price may vary when the e-shop is billed!
+- **Disclaimer**
+    - The price returned by Bitcointags is indicative only. The exchange rate is constantly changing and bitcoin does not have a uniform price. Therefore, the price may vary when the e-shop is billed!
 
 
 
@@ -83,7 +83,7 @@ After that click the **Load unpacked** button and select the **src** folder you 
 
 
 ### Mozila Firefox
-To add a temporary add-on, follow the [official documentation](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/#Using_the_command_line).
+To add a temporary add-on, follow the **[official documentation](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/#Using_the_command_line)**.
 
 **Notes**
 - The temporary add-on will only be in Firefox until you **delete** it or **turn off the browser**. 
