@@ -39,7 +39,7 @@
   "permissions": ["storage", "tabs"],
   "browser_specific_settings": {
       "gecko": {
-        "id": "<extension_id>@example.com"
+        "id": "bitcointags@extension.id"
       }
   }
 }
