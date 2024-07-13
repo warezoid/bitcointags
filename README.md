@@ -13,8 +13,8 @@ Bitcointags is a browser extension that converts the fiat price of a product or 
 - [Coming soon...](#coming-soon)
 - [License](#license)
 - [Installation](#installation)
-    - [Chromium browsers](#chromium-browsers)
     - [Mozila Firefox](#mozila-firefox)
+    - [Chromium browsers](#chromium-browsers)
 - [FAQ](#faq)
 - [Sources](#sources)
 - [Acknowledgements](#acknowledgements)
@@ -36,9 +36,9 @@ Bitcointags is licensed under the MIT license. The full text of the license can 
 ## Installation
 Bitcointags are available for browsers with the [**Chromium core**](https://www.chromium.org) (Google Chrome, Microsoft Edge, Opera...) and [**Mozilla Firefox**](https://www.mozilla.org/en-US/firefox).
 
-You can add Bitcointags for Firefox via the official Mozila add-ons or as a temporary add-on. Bitcointags is not yet available in the [Chrome Web Store](https://chromewebstore.google.com/) and I won't personally add Bitcointags to the [Chrome Web Store](https://chromewebstore.google.com/). The reason can be found in the [FAQ](#faq) section. Still, Bitcointags can be added to the Chrome browser using the **developer mode** for Chromium browsers.
+You can add Bitcointags for **Firefox** via the **official Mozila add-ons** or as a **temporary add-on**. Bitcointags is **not yet available** in the [Chrome Web Store](https://chromewebstore.google.com/) and I **won't personally add** Bitcointags to the Chrome Web Store. The reason can be found in the [FAQ](#faq) section. Still, Bitcointags can be added to the Chrome browser using the **developer mode** for Chromium browsers.
 
-Installing Bitcointags in different browsers may vary slightly, but the first few steps are always the same, so I decided to describe the installation and modification of the source folders together.
+To add the Bitcointags extension as a **temporary add-on** or through **developer mode**, you will need the Bitcointags source files. The following guide outlines the steps to download these files and modify them for use in your browser.
 
 #### 1. Source files installation
 Click **Code** and select **Download ZIP** or use the command line with [Git](https://git-scm.com/).
@@ -67,6 +67,7 @@ src/
 
 
 ### Mozila Firefox
+You can add Bitcointags for **Firefox** via the **official Mozila add-ons** or as a **temporary add-on**.
 
 #### Mozila Add-ons
 Add Bitcointags via **[this](https://addons.mozilla.org/addon/bitcointags/)** link or search for ***"Bitcointags"*** in **[Mozilla Add-ons](https://addons.mozilla.org)**.
@@ -81,6 +82,8 @@ To add a temporary add-on, follow the **[official documentation](https://extensi
 
 
 ### Chromium browsers
+Bitcointags is **not yet available** in the [Chrome Web Store](https://chromewebstore.google.com/) and I **won't personally add** Bitcointags to the Chrome Web Store. The reason can be found in the [FAQ](#faq) section. Still, Bitcointags can be added to the Chrome browser using the **developer mode** for Chromium browsers.
+
 I decided to include a link to the official instructions for [loading the unpacked extension](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked) into Google Chrome. With a few exceptions, the procedure is almost identical for browsers running the Chromium kernel.
 
 #### 1. Extensions window
