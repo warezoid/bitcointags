@@ -3,11 +3,12 @@
 
 
 ## Abstract
-This document provides a detailed technical description of the Bitcointags project code. It is intended for developers who wish to contribute to the development of this project. The document contains an in-depth analysis of the code structure, the technologies used, and the implemented functions. The documentation primarily focuses on the [script.js](../src/script.js) file, which is the core of the Bitcointags project. For information regarding usage guides, frequently asked questions (FAQ), and similar topics, please refer to the [README.md](../README.md) file.
+This document describes the technically key parts of the Bitcointags program. I have tried to select parts that might cause confusion for other developers when developing Bitcointags. An [overview of contents](#table-of-contents) can be found below. For practical information, the [README.md](../README.md) file can be visited.
 
 ## Table of Contents
 - [Introduction](#introduction)
-
+- [Terminology](#terminology)
+- [Functional Principles](#functional-principles)
 - [Sources](#sources)
 - [Acknowledgements](#acknowledgements)
 
@@ -17,29 +18,27 @@ This document provides a detailed technical description of the Bitcointags proje
 
 
 
+
 ## Terminology
 
 
 
+
 ## Functional Principles
-- ### CSS
-    - #### Tag styles
-    - #### Popup styles (style.css)
+- Communication and data manipulation.
+    - Saving and loading data.
+    - Communication between content scripts and popup.
 
--   ### HTML
-    - #### Tag HTML
-    - #### popup.html
+- Calling API for pricing.
 
--   ### Manifest
+- Algorithms.
+    - isCurrency algorithm.
+    - getAmount algorithm.
 
--   ### JavaScript
-    - #### popup.js
-    - #### script.js
-
-
-
-
-
+- GUI.
+    - Display tag.
+    - Loading animation.
+    - Switching scenes.
 
 
 
