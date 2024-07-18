@@ -25,20 +25,56 @@ This document describes the technically key parts of the Bitcointags program. I 
 
 
 ## Functional Principles
-- Communication and data manipulation.
-    - Saving and loading data.
-    - Communication between content scripts and popup.
 
-- Calling API for pricing.
+### Supported currencies.
+When Bitcointags is run, variables are initialized and declared. One of these variables is an array of currencies that Bitcointags supports. Below you can find a list of these currencies.
 
-- Algorithms.
-    - isCurrency algorithm.
-    - getAmount algorithm.
+**Supported currencies: *US dollar (USD), Czech koruna (CZK), euro (EUR), Japanese yen (JPY), British pound (GBP).***
 
-- GUI.
-    - Display tag.
-    - Loading animation.
-    - Switching scenes.
+The supported currencies were carefully selected to make Bitcointags as globally compatible as possible, while avoiding collisions and not overloading the program unnecessarily.
+
+Presented below is the code that initializes and declares the "**currencies**" variable.
+
+```
+const currencies = [
+    {ticker: "btc", apiCode: "bitcoin", symbol: ["btc", "₿", "bitcoin", "satoshi", "sat", "sats"]},
+    {ticker: "usd", apiCode: "united-states-dollar", symbol: ["usd", "$", "usdollar", "unitedstatesdollar"]},
+    {ticker: "czk", apiCode: "czech-republic-koruna", symbol: ["czk", "kč", ",-", "czechkoruna", "czechcrown"]},
+    {ticker: "eur", apiCode: "euro", symbol: ["eur", "€", "euro"]},
+    {ticker: "jpy", apiCode: "japanese-yen", symbol: ["jpy", "¥", "yen"]},
+    {ticker: "gbp", apiCode: "british-pound-sterling", symbol: ["gbp", "£", "pound", "britishpound"]}
+]
+```
+
+"**Currencies**" is an array of objects. Each object represents an individual currency, structured as follows:
+
+```
+{ticker, apiCode, symbol}
+```
+
+
+
+### Getting the financial data.
+Bitcointags calls the [CoinCap API 2.0](https://docs.coincap.io) at regular intervals to get informations about the price of bitcoin and the exchange rates of the fiat currencies it supports.
+
+The interval between calls to the api interface is 15,000 ms (15 s). Once upon 60,000 ms (1 min) there is a full API call, which call all currencies. 
+
+
+
+
+
+### Communication and data manipulation.
+Saving and loading data.
+Communication between content scripts and popup.
+
+### Algorithms.
+isCurrency algorithm.
+getAmount algorithm.
+
+### GUI.
+Display tag.
+Loading animation.
+Switching scenes.
 
 
 
@@ -63,7 +99,7 @@ Sources can be seen as links to products used in Bitcointags, including APIs, gr
     - Other graphical elements used in the Bitcointags project, such as alert and checkmark icon, along with all Bitcointags logos, are also licensed under the [MIT license](https://en.wikipedia.org/wiki/MIT_License) and are free to use.
 
 - **APIs**
-    - Coincap API 2.0 - used to get the price of bitcoin and rate of fiat currencies: [docs.coincap.io](https://docs.coincap.io)
+    - CoinCap API 2.0 - used to get the price of bitcoin and rate of fiat currencies: [docs.coincap.io](https://docs.coincap.io)
     - Web Crypto API - used to calculate the checksum: [www.w3.org/TR/WebCryptoAPI](https://www.w3.org/TR/WebCryptoAPI)
     - Chrome APIs
         - Storage API - used to save the user profile: [developer.chrome.com](https://developer.chrome.com/docs/extensions/reference/api/storage)
