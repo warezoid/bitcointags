@@ -52,6 +52,12 @@ const currencies = [
 {ticker, apiCode, symbol}
 ```
 
+"**Ticker**" serves as a unique id of the currency and also passes its value to the "**currency**" variable, which is further used by Bitcointags.
+
+"**Apicode**" is a currency id according to the *CoinCap standard*. By adding this variable to the URL to which a GET request is sent, information about different currencies can be obtained. For more information about the CoinCap API, please see their **[official documentation](https://docs.coincap.io)** or the **["Getting the financial data"](#getting-the-financial-data)** section.
+
+"**Symbol**" is an array of strings that represent the potential display of a currency on a page.
+
 
 
 ### Getting the financial data.
