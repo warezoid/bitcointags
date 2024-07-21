@@ -9,6 +9,7 @@ This document describes the technically key parts of the Bitcointags program. I 
 - [Introduction](#introduction)
 - [Terminology](#terminology)
 - [Functional Principles](#functional-principles)
+    - [Supported currencies](#supported-currencies)
 - [Sources](#sources)
 - [Acknowledgements](#acknowledgements)
 
@@ -35,7 +36,7 @@ The supported currencies were carefully selected to make Bitcointags as globally
 
 Presented below is the code that initializes and declares the "**currencies**" variable.
 
-```
+```javascript
 const currencies = [
     {ticker: "btc", apiCode: "bitcoin", symbol: ["btc", "₿", "bitcoin", "satoshi", "sat", "sats"]},
     {ticker: "usd", apiCode: "united-states-dollar", symbol: ["usd", "$", "usdollar", "unitedstatesdollar"]},
@@ -44,6 +45,9 @@ const currencies = [
     {ticker: "jpy", apiCode: "japanese-yen", symbol: ["jpy", "¥", "yen"]},
     {ticker: "gbp", apiCode: "british-pound-sterling", symbol: ["gbp", "£", "pound", "britishpound"]}
 ]
+
+
+//script.js line 365
 ```
 
 "**Currencies**" is an array of objects. Each object represents an individual currency, structured as follows:
@@ -54,7 +58,7 @@ const currencies = [
 
 "**Ticker**" serves as a unique id of the currency and also passes its value to the "**currency**" variable, which is further used by Bitcointags.
 
-"**Apicode**" is a currency id according to the *CoinCap standard*. By adding this variable to the URL to which a GET request is sent, information about different currencies can be obtained. For more information about the CoinCap API, please see their **[official documentation](https://docs.coincap.io)** or the **["Getting the financial data"](#getting-the-financial-data)** section.
+"**Apicode**" is a currency id according to the *CoinCap standard*. By adding this variable to the URL to which a GET request is sent, information about different currencies can be obtained. For more information about the CoinCap API, please see their **[official documentation](https://docs.coincap.io)** or the "**[Getting the financial data](#getting-the-financial-data)**" section.
 
 "**Symbol**" is an array of strings that represent the potential display of a currency on a page.
 
@@ -63,7 +67,39 @@ const currencies = [
 ### Getting the financial data.
 Bitcointags calls the [CoinCap API 2.0](https://docs.coincap.io) at regular intervals to get informations about the price of bitcoin and the exchange rates of the fiat currencies it supports.
 
-The interval between calls to the api interface is 15,000 ms (15 s). Once upon 60,000 ms (1 min) there is a full API call, which call all currencies. 
+The interval between calls to the api interface is 15,000 ms (15 s). Once upon 60,000 ms (1 min) there is a full API call, which call all currencies. For a better understanding, the diagram below can be used.
+
+![API call diagram.](img/diagram_1.svg)
+
+Below is a diagram converted into code.
+
+```javascript
+const apiCall = async () => {
+    let period = 0
+    
+    await fullCall()
+
+    apiCallInterval = setInterval(() => {
+        period++
+
+        if(period >= 4){  
+            fullCall()
+
+            period = 0
+            return
+        }
+        
+        partialCall()
+    }, 15000)
+
+    document.addEventListener("mouseover", mouseOver)
+    window.addEventListener("mouseout", mouseOut)
+}
+
+
+//script.js line 385
+```
+
 
 
 
