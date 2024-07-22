@@ -21,6 +21,8 @@ This document describes the technically key parts of the Bitcointags program. I 
 
 
 ## Terminology
+- **Tag**: HTML element that Bitcointags adds to the page.
+
 
 
 
@@ -58,15 +60,44 @@ const currencies = [
 
 "**Ticker**" serves as a unique id of the currency and also passes its value to the "**currency**" variable, which is further used by Bitcointags.
 
-"**Apicode**" is a currency id according to the *CoinCap standard*. By adding this variable to the URL to which a GET request is sent, information about different currencies can be obtained. For more information about the CoinCap API, please see their **[official documentation](https://docs.coincap.io)** or the "**[Getting the financial data](#getting-the-financial-data)**" section.
+"**Apicode**" is a currency id according to the *CoinCap standard*. By adding this variable to the URL to which a GET request is sent, information about different currencies can be obtained. For more information about the CoinCap API, please see their [official documentation](https://docs.coincap.io) or the "[Getting the financial data](#getting-the-financial-data)" section.
 
 "**Symbol**" is an array of strings that represent the potential display of a currency on a page.
 
 
 
 ### Getting the financial data.
-Bitcointags calls the [CoinCap API 2.0](https://docs.coincap.io) at regular intervals to get informations about the price of bitcoin and the exchange rates of the fiat currencies it supports.
+Bitcointags uses REST API technology for [CoinCap API 2.0](https://docs.coincap.io) calls, which is based on HTTP requests. Bitcointags only uses HTTP GET requests. Data is returned in JSON format.
 
+Bitcointags calls the CoinCap API 2.0 at regular intervals to get informations about the price of bitcoin and the exchange rates of the fiat currencies it supports.
+
+#### Data from Various Endpoints
+Bitcointags uses two different CoinCap API 2.0 endpoints. From one endpoint it gets bitcoin price information, while from the other endpoint it gets fiat currency data. The two endpoints and the types of data that can be retrieved from them are described below.
+
+**Bitcoin price data**
+```
+{change, price, statusCode}
+```
+
+"**Change**" represents the percentage movement in the value of bitcoin over the last 24 hours. This is used when displaying the *tag* on the page.
+
+"**Price**" indicates the current price of bitcoin in US dollars. This is used when calculating the price of an item and when displaying the *tag* on the page.
+
+"**Status code**" is the HTTP status code returned by the CoinCap API 2.0. This code is used when displaying a *tag*, either normal or error. For more information on status codes, please visit the [CoinCap API 2.0 documentation](https://docs.coincap.io). For details on the use of status codes in Bitcointags, see the [Errors](#errors) section.
+
+**Fiat price data**
+```
+{currency, rate, statusCode}
+```
+
+"**Currency**" represents the ticker symbol of the called currency. It serves as a unique id for the currency and is displayed when the *tag* is listed on the page. It is derived from the *Ticker* variable in the [Supported currencies section](#supported-currencies).
+
+"**Rate**" stores the rate between the US Dollar and the called currency. This rate is used when calculating the price if it is not in US dollars.
+
+"**Status code**" is the HTTP status code returned by the CoinCap API 2.0. This code is used when displaying a *tag*, either normal or error. For more information on status codes, please visit the [CoinCap API 2.0 documentation](https://docs.coincap.io). For details on the use of status codes in Bitcointags, see the [Errors](#errors) section.
+
+
+#### Periodic API Calls
 The interval between calls to the api interface is 15,000 ms (15 s). Once upon 60,000 ms (1 min) there is a full API call, which call all currencies. For a better understanding, the diagram below can be used.
 
 ![API call diagram.](img/diagram_1.svg)
@@ -105,6 +136,15 @@ const apiCall = async () => {
 
 
 
+
+
+
+
+
+
+
+
+
 ### Communication and data manipulation.
 Saving and loading data.
 Communication between content scripts and popup.
@@ -112,6 +152,8 @@ Communication between content scripts and popup.
 ### Algorithms.
 isCurrency algorithm.
 getAmount algorithm.
+
+### Errors.
 
 ### GUI.
 Display tag.
