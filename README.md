@@ -15,6 +15,9 @@ Bitcointags is a browser extension that converts the fiat price of a product or 
 - [Installation](#installation)
     - [Mozila Firefox](#mozila-firefox)
     - [Chromium browsers](#chromium-browsers)
+- [Interface description](#interface-description)
+    - [GUI](#gui-description)
+    - [Tag](#tag-description)
 - [FAQ](#faq)
 - [Sources](#sources)
 - [Acknowledgements](#acknowledgements)
@@ -113,6 +116,41 @@ After that click the **Load unpacked** button and select the **src** folder you 
 
 
 
+## Interface description.
+This section focuses on describing **graphical user interface (GUI)** and **tag** in Bitcointags project.
+
+### GUI description
+...
+
+
+### Tag description
+A "tag" is an HTML element that the Bitcointags application adds to a page. Tags usually have two basic appearances: **normal** and **error**. The "Loading" tag is not included in this description.
+
+#### Normal tag
+The **normal tag** is displayed if everything is running fine, or if an error occurs during an API call but the program already has older API data. You can see the **normal tag** below.
+
+![Bitcointags tag](docs/img/tag_1.svg)
+
+**Logo**
+The Bitcoin logo symbolizes the **timeliness** of the data. If the logo **turns grey**, it means that the Bitcointags app is **not currently working** with the **current bitcoin price** or **fiat currency exchange rates**. However, the **program still works**.
+
+![Bitcointags tag - logo detailed.](docs/img/detailedTag_1.svg)
+
+**Price of goods**
+The **amount of bitcoins or satoshi** (bitcoin subunit) represents the **price of the good or service** for which you have **activated the Bitcointags program**. Whether the price is shown in bitcoins or satoshi depends on your **Bitcointags settings**.
+
+![Bitcointags tag - price of goods detailed](docs/img/detailedTag_2.svg)
+
+**Bitcoin price**
+The bitcoin price shows the **current value of bitcoin** from which the **price of a good or service** has been **calculated**. The **colour of the indicator** is based on the **movement of the bitcoin price** over the last 24 hours. If the price is **red**, it means that bitcoin has **fallen** in the last 24 hours. If the price is **green*, bitcoin has **risen** over the same period.
+
+![Bitcointags tag - bitcoin price detailed](docs/img/detailedTag_3.svg)
+
+#### Error tag
+...
+
+
+
 ## FAQ
 - ***Something I would like to change about Bitcointags. What about it?***
     - I'd like the project to evolve with community involvement over time. That's why I'm open to collaboration, discussions, adding new features and so on. If you have ideas, questions or anything you would like to contribute or discuss regarding Bitcointags, feel free to share them in the discussion.
@@ -137,6 +175,7 @@ Sources can be seen as links to products used in Bitcointags, including APIs, gr
     - Icons8 - colourful github logo: [icons8.com](https://icons8.com)
     - Google Fonts - font used in Bitcointags: [fonts.google.com](https://fonts.google.com/)
         - Bakbak One - specific font used in Bitcointags: [Bakbak One - Google Fonts](https://fonts.google.com/specimen/Bakbak+One?query=Bakbak+one)
+    - Figma - Bitcointags design: [figma.com](https://www.figma.com)
     - Other graphical elements used in the Bitcointags project, such as alert and checkmark icon, along with all Bitcointags logos, are also licensed under the [MIT license](https://en.wikipedia.org/wiki/MIT_License) and are free to use.
 
 - **APIs**

@@ -21,8 +21,7 @@ This document describes the technically key parts of the Bitcointags program. I 
 
 
 ## Terminology
-- **Tag**: HTML element that Bitcointags adds to the page.
-
+- **Tag**: HTML element that Bitcointags adds to the page. You can see the tag below.
 
 
 
@@ -180,6 +179,7 @@ Sources can be seen as links to products used in Bitcointags, including APIs, gr
     - Icons8 - colourful github logo: [icons8.com](https://icons8.com)
     - Google Fonts - font used in Bitcointags: [fonts.google.com](https://fonts.google.com/)
         - Bakbak One - specific font used in Bitcointags: [Bakbak One - Google Fonts](https://fonts.google.com/specimen/Bakbak+One?query=Bakbak+one)
+    - Figma - Bitcointags design: [figma.com](https://www.figma.com)
     - Other graphical elements used in the Bitcointags project, such as alert and checkmark icon, along with all Bitcointags logos, are also licensed under the [MIT license](https://en.wikipedia.org/wiki/MIT_License) and are free to use.
 
 - **APIs**
