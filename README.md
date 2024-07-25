@@ -26,6 +26,7 @@ Bitcointags is a browser extension that converts the fiat price of a product or 
 
 ## Coming soon...
 - Add GUI description section.
+- Fix outdated tag bug. (script.js line 739)
 - Complete extensive documentation.
 - Select&convert mode.
 - It tells you whether the e-shop accepts bitcoins.
@@ -127,27 +128,40 @@ This section focuses on describing **graphical user interface (GUI)** and **tag*
 A "tag" is an HTML element that the Bitcointags application adds to a page. Tags usually have two basic appearances: **normal** and **error**. The "Loading" tag is not included in this description.
 
 #### Normal tag
-The **normal tag** is displayed if everything is running fine, or if an error occurs during an API call but the program already has older API data. You can see the **normal tag** below.
+The **normal tag** is displayed if everything is running fine, or if an error occurs during an CoinCap API 2.0 call but the program already has older API data. You can see the **normal tag** below.
 
-![Bitcointags tag](docs/img/tag_1.svg)
+![Bitcointags normal tag](docs/img/tag_1.svg)
 
 **Logo**
 The Bitcoin logo symbolizes the **timeliness** of the data. If the logo **turns grey**, it means that the Bitcointags app is **not currently working** with the **current bitcoin price** or **fiat currency exchange rates**. However, the **program still works**.
 
-![Bitcointags tag - logo detailed.](docs/img/detailedTag_1.svg)
+![Bitcointags normal tag - logo detailed.](docs/img/detailedTag_1.svg)
 
 **Price of goods**
 The **amount of bitcoins or satoshi** (bitcoin subunit) represents the **price of the good or service** for which you have **activated the Bitcointags program**. Whether the price is shown in bitcoins or satoshi depends on your **Bitcointags settings**.
 
-![Bitcointags tag - price of goods detailed](docs/img/detailedTag_2.svg)
+![Bitcointags normal tag - price of goods detailed](docs/img/detailedTag_2.svg)
 
 **Bitcoin price**
-The bitcoin price shows the **current value of bitcoin** from which the **price of a good or service** has been **calculated**. The **colour of the indicator** is based on the **movement of the bitcoin price** over the last 24 hours. If the price is **red**, it means that bitcoin has **fallen** in the last 24 hours. If the price is **green*, bitcoin has **risen** over the same period.
+The bitcoin price shows the **current value of bitcoin** from which the **price of a good or service** has been **calculated**. The **colour of the indicator** is based on the **movement of the bitcoin price** over the last 24 hours. If the price is **red**, it means that bitcoin has **fallen** in the last 24 hours. If the price is **green**, bitcoin has **risen** over the same period.
 
-![Bitcointags tag - bitcoin price detailed](docs/img/detailedTag_3.svg)
+![Bitcointags normal tag - bitcoin price detailed](docs/img/detailedTag_3.svg)
 
 #### Error tag
-...
+If the **CoinCap API 2.0 response** is empty, an **error** tag will be displayed. This indicates that an error occurred when the **API was first called**. Please refer to the [Errors](docs/DOCUMENTATION.md#errors) section of the [documentation](docs/DOCUMENTATION.md) for a more detailed explanation of this issue. You can see the **error tag** below.
+
+![Bitcointags error tag](docs/img/tag_2.svg)
+
+**Error code**
+Error code is the **HTTP status code** returned by the **CoinCap API 2.0**. For more information on status codes, please visit the [CoinCap API 2.0 documentation](https://docs.coincap.io). For details on the use of status codes in Bitcointags, see the [Errors](#errors) section of the [documentation](docs/DOCUMENTATION.md).
+
+![Bitcointags error tag - error code detailed](docs/img/detailedTag_4.svg)
+
+**Error message**
+Error message is a **short description** of the error. The message should help in **troubleshooting**.
+
+
+![Bitcointags error tag - error code detailed](docs/img/detailedTag_5.svg)
 
 
 
