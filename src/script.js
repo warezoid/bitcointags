@@ -290,7 +290,7 @@ document.body.appendChild(tag)
 let config = {
     btcModeEnable: 1,
     extensionEnable: 1,
-    minSatoshi: "0.09999999"
+    maxSatoshi: "0.09999999"
 }
 
 chrome.storage.sync.get(["bitcointagsConfig"], (response) => {
@@ -885,9 +885,9 @@ const addSpacing = (input) => {
 }
 
 const getUnitValues = (productPrice) => {
-    const {btcModeEnable, minSatoshi} = config
+    const {btcModeEnable, maxSatoshi} = config
 
-    if(btcModeEnable || productPrice >= minSatoshi){
+    if(btcModeEnable || productPrice >= maxSatoshi){
         return {unit: "BTC", productPrice: priceFormat(productPrice)}
     }
 

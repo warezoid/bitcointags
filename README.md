@@ -25,8 +25,8 @@ Bitcointags is a browser extension that converts the fiat price of a product or 
 
 
 ## Coming soon...
-- Add GUI description section.
 - Fix outdated tag bug. (script.js line 739)
+- Fix style supremacy bug. (script.js line 3)
 - Complete extensive documentation.
 - Select&convert mode.
 - It tells you whether the e-shop accepts bitcoins.
@@ -121,7 +121,42 @@ After that click the **Load unpacked** button and select the **src** folder you 
 This section focuses on describing **graphical user interface (GUI)** and **tag** in Bitcointags project.
 
 ### GUI description
-...
+The Graphical User Interface (GUI) is a **extension popup** that is used to **customize Bitcointags**. The description of the GUI focuses only on the **main part**, not on loading and status display. You can see the **GUI** below.
+
+![GUI](docs/img/gui_1.svg)
+
+**On/Off button**
+The on/off button is used to **activate and deactivate Bitcointags**. When Bitcointags are **disabled**, there is **no listening** on the page or **calling the CoinCap API 2.0**, so **Bitcointags are not active**.
+
+![GUI](docs/img/detailedGui_1.svg)
+
+**BTC/sats button**
+The BTC/sats button determines whether the **resulting price** returned by Bitcointags is displayed in **bitcoins or satoshi**. **Satoshi** is a **subunit of bitcoin**, specifically **one hundred millionth of a bitcoin**.
+
+![GUI](docs/img/detailedGui_2.svg)
+
+**Maximum satoshi textbox**
+The value in the textbox specifies the **amount of satoshi** at which the **price returned by Bitcointags** will be **displayed in satoshi** when **satoshi mode is enabled**. If the price **exceeds** this amount, it will be **displayed in bitcoins**. The user can set an **integer** from **1 to 999,999,999**. This setting prevents **incorrect formatting of the tag**. The default value is **9,999,999 satoshi**.
+
+![GUI](docs/img/detailedGui_3.svg)
+
+**Save button**
+The Save button is used to **save the new settings**.
+
+![GUI](docs/img/detailedGui_4.svg)
+
+**Github logo**
+Clicking on the GitHub logo will **redirect you** to the Bitcointags **repository on GitHub**.
+
+![GUI](docs/img/detailedGui_5.svg)
+
+
+
+
+
+
+
+
 
 
 ### Tag description
