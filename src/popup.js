@@ -352,7 +352,7 @@ setTimeout(() => {
             extensionEnable = bitcointagsConfig.extensionEnable
             btcModeEnable = bitcointagsConfig.btcModeEnable
 
-            input = toSats(bitcointagsConfig.minSatoshi)
+            input = toSats(bitcointagsConfig.maxSatoshi)
             previousInput = input
 
             setDefault()
@@ -440,7 +440,7 @@ const saveConfig = () => {
     let obj = {
         btcModeEnable,
         extensionEnable,
-        minSatoshi: toBtc(input)
+        maxSatoshi: toBtc(input)
     }
     
     chrome.storage.sync.set({"bitcointagsConfig": obj}, () => {
