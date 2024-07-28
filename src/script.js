@@ -28,10 +28,6 @@ style.textContent = `
         line-height: normal;
     }
 
-    #bitcointags-mainContainer *{
-        font-family: Bakbak One, sans-serif !important;
-    }
-
     .bitcointags-active{
         background: linear-gradient(135deg, #ff7b00, #f59119, #ffae00);
     }
@@ -109,9 +105,6 @@ style.textContent = `
         width: 210px;
         padding-right: 10px;
         text-align: right;
-    }
-    
-    .bitcointags-main-textContainer{
         color: #ffffff;
     }
 
@@ -120,7 +113,12 @@ style.textContent = `
         justify-content: right;
         align-items: baseline;
         gap: 10px;
+    }
+    
+    .bitcointags-main-goodsPriceContainer *{
+        font-family: Bakbak One, sans-serif;
         font-size: 28px;
+        color: #ffffff;
     }
 
     #bitcointags-main-btcUnit{
@@ -134,6 +132,10 @@ style.textContent = `
         justify-content: right;
         align-items: baseline;
         gap: 10px;
+    }
+
+    #bitcointags-main-btcPriceContainer *{
+        font-family: Bakbak One, sans-serif;
         font-size: 18px;
     }
 
@@ -153,11 +155,16 @@ style.textContent = `
     }
     
     #bitcointags-error-container *{
+        font-family: Bakbak One, sans-serif;
         color: #da1e37;
     }
 
     .bitcointags-errorCode-container{
         padding-left: 15px;
+        font-size: 22px;
+    }
+    
+    .bitcointags-errorCode-container *{
         font-size: 22px;
     }
 
