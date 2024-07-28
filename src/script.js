@@ -743,7 +743,7 @@ const dataCompression = () => {
             if(fiatValue.rate != null){
                 obj.bitcoinPrice = bitcoinValue.price / fiatValue.rate
                 obj.productPrice = ammount / obj.bitcoinPrice
-                obj.statusCode = fiatValue.statusCode
+                obj.statusCode = (bitcoinValue.statusCode + fiatValue.statusCode) / 2
 
                 return obj
             }
