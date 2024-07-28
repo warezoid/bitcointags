@@ -26,7 +26,6 @@ Bitcointags is a browser extension that converts the fiat price of a product or 
 
 ## Coming soon...
 - Fix outdated tag bug. (script.js line 739)
-- Fix style supremacy bug. (script.js line 3)
 - Complete extensive documentation.
 - Select&convert mode.
 - It tells you whether the e-shop accepts bitcoins.
