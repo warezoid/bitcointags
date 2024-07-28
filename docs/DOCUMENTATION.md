@@ -70,10 +70,42 @@ Bitcointags uses REST API technology for [CoinCap API 2.0](https://docs.coincap.
 
 Bitcointags calls the CoinCap API 2.0 at regular intervals to get informations about the price of bitcoin and the exchange rates of the fiat currencies it supports.
 
+Below you can find the structure of the data that Bitcointags get from the CoinCap API 2.0 call.
+
+```
+{
+    btc: {
+        change,
+        price,
+        statusCode
+    },
+    fiat: [{currency, rate, statusCode}, ...]
+}
+```
+
+When the Bitcointags program is run, a data variable with the above structure is initialized and declared. It stores the data obtained from the CoinCap API 2.0. You can see the initialization and declaration of this variable below.
+
+```javascript
+let data = {
+    btc: {
+        change: null,
+        price: null,
+        statusCode: null
+    },
+    fiat: []
+}
+
+
+//script.js line 380
+```
+
+
 #### Data from Various Endpoints
 Bitcointags uses two different CoinCap API 2.0 endpoints. From one endpoint it gets bitcoin price information, while from the other endpoint it gets fiat currency data. The two endpoints and the types of data that can be retrieved from them are described below.
 
 **Bitcoin price data**
+The bitcoin price information is obtained from the *assets/bitcoin* endpoint. The specific data and its description are given below.
+
 ```
 {change, price, statusCode}
 ```
@@ -85,6 +117,8 @@ Bitcointags uses two different CoinCap API 2.0 endpoints. From one endpoint it g
 "**Status code**" is the HTTP status code returned by the CoinCap API 2.0. This code is used when displaying a *tag*, either normal or error. For more information on status codes, please visit the [CoinCap API 2.0 documentation](https://docs.coincap.io). For details on the use of status codes in Bitcointags, see the [Errors](#errors) section.
 
 **Fiat price data**
+Information about fiat currencies is obtained from the *rates/"CURRENCY_ID"* endpoint. Currency IDs are contained in the **apiCode** variable for each currency supported by Bitcointags. We would choose the endpoint *rates/euro* to call the CoinCap API 2.0 to get information about euros. The specific details and their description are given below.
+
 ```
 {currency, rate, statusCode}
 ```
@@ -131,17 +165,115 @@ const apiCall = async () => {
 ```
 
 
+The main difference between *fullCall* and *partialCall* is in obtaining information about fiat currencies. The CoinCap API 2.0 call logic code for obtaining bitcoin financial information is shown below.
+
+In the place marked with a comment, the two functions make different API calls to get information about fiat currencies. The main differences are the number of CoinCap API 2.0 calls and the different error logic. More about these differences can be found below.
+
+```javascript
+const fullCall = async () => {
+    try{
+        let usdResponse = await fetch(`https://api.coincap.io/v2/assets/bitcoin`)
+
+        if(usdResponse.status == 200){
+            let dataApi = await usdResponse.json()
+
+            data.btc = {
+                change: dataApi.data.changePercent24Hr,
+                price: dataApi.data.priceUsd,
+                statusCode: usdResponse.status
+            }
+                        
+            //calling CoinCap API 2.0 for informations on fiat currencies...
+
+            return 
+        }   
+
+        data.btc.statusCode = usdResponse.status
+
+    }catch(err){
+        data.btc.statusCode = 999
+    }
+}
+
+
+//script.js line 414
+```
+
+**Full call**
+FullCall is called once per minute and is considered the main CoinCap API 2.0 call. It has the functionality to capture and pass information about the occurrence of an error and retrieves financial information about all currencies by cycling CoinCap API 2.0 calls for each currency in the *[list of currencies](#supported-currencies)* separately. Below you will find the code to call for information on fiat currencies.
+
+```javascript
+let workingArray = []
+            
+for(let i = 2; i < currencies.length; i++){
+    let statusCode = 200
+    
+    try{
+        let fiatResponse = await fetch(`https://api.coincap.io/v2/rates/${currencies[i].apiCode}`)
+
+        if(fiatResponse.status == 200){
+            dataApi = await fiatResponse.json()
+
+            workingArray.push({currency: currencies[i].ticker, rate: dataApi.data.rateUsd, statusCode})
+
+            continue
+        }
+        
+        statusCode = fiatResponse.status
+    }catch(err) {
+        statusCode = 999
+    }
+
+    workingArray.push({currency: currencies[i].ticker, rate: null, statusCode})
+}
+
+setData(workingArray)
+
+
+//script.js line 428
+```
+
+**Partial call**
+The *partialCall* is made every 15 seconds and is considered a CoinCap API 2.0 update call. Errors are intentionally ignored and wait for the *fullCall* error to be acknowledged. If *fullCall* logs an error but *partialCall* goes through fine, the program discards the error and continues.
+
+Only the preferred currency is called from the currency list. This is the currency that was last used on the page when Bitcointags succeeded. It is assumed that there will not be multiple currencies on a single page. If there are multiple currencies on a page, Bitcointags handles this by using values from *fullCall* that are at most a minute old.
+
+Below you will find the code to call the fiat currency information in *partialCall*.
+
+```javascript
+if(preferredCurrency != ""){
+    let x = data.fiat.findIndex(c => c.currency == preferredCurrency)
+    let y = currencies.findIndex(c => c.ticker == preferredCurrency)
+
+    if(x > -1){
+        try{
+            let fiatResponse = await fetch(`https://api.coincap.io/v2/rates/${currencies[y].apiCode}`)
+
+            if(fiatResponse.status == 200){
+                dataApi = await fiatResponse.json()
+
+                data.fiat[x].rate = dataApi.data.rateUsd
+                data.fiat[x].statusCode = fiatResponse.status
+
+                return
+            }
+        }catch(err) {
+
+        }
+    }
+}
+
+
+//script.js line 496
+```
+
+
+**Note**
+At the same time, when the CoinCap API 2.0 is called for the first time, the event listener are pinned to the window and document, which are important for the further functioning of Bitcointags. The first listener is described in more detail in the [DOM structure monitoring](#dom-structure-monitoring) section. The second listener, which responds to the mouse leaving the page, triggers a function that renders the tag invisible from the page.
 
 
 
-
-
-
-
-
-
-
-
+### DOM structure monitoring.
 
 
 ### Communication and data manipulation.
