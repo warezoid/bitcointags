@@ -491,8 +491,7 @@ const partialCall = async () => {
                 price: dataApi.data.priceUsd,
                 statusCode: usdResponse.status
             }
-            
-            
+
             if(preferredCurrency != ""){
                 let x = data.fiat.findIndex(c => c.currency == preferredCurrency)
                 let y = currencies.findIndex(c => c.ticker == preferredCurrency)

@@ -22,7 +22,7 @@ This document describes the technically key parts of the Bitcointags program. I 
 
 ## Terminology
 - **Tag**: HTML element that Bitcointags adds to the page. You can see the tag below.
-
+- **DOM (Document object model)**: Structured tree model of the document, where each element of the document is represented as an object. For more information, you can visit [Document Object Model](https://wikipedia.org/wiki/Document_Object_Model) on [Wikipedia](https://wikipedia.org).
 
 
 
@@ -274,17 +274,71 @@ At the same time, when the CoinCap API 2.0 is called for the first time, the eve
 
 
 ### DOM structure monitoring.
+Monitoring the DOM structure consists of attaching event listeners to elements, a document, or an entire window and then the behavior of the program when they are triggered.
+
+Event listeners have four basic functions in DOM monitoring. Each of these listeners is described in detail below.
+
+#### Mouseover
+The mouseover event listener is activated when the user hovers the mouse cursor over any HTML element on the page. In the context of Bitcointags, this listener calls the [isPrice algorithm](#isprice) each time it is activated, which determines whether the text in the selected element contains a price with the supported currency. Other events follow, which are described in detail below.
+
+```javascript
+previousElement = currentElement
+currentElement = e.target
+
+if(currentElement && previousElement){
+    if(currentElement.innerText != previousElement.innerText){
+        if(isCurrency()){
+            currentElement.addEventListener("mouseleave", removeTag)
+
+            generateTag()
+            return
+        }
+        
+        for(let i = 0; i < 4; i++){
+            if(currentElement.parentElement){
+                currentElement = currentElement.parentElement
+
+                if(isCurrency()){
+                    if(currentElement.innerText != previousElement.innerText){
+                        currentElement.addEventListener("mouseleave", removeTag)
+
+                        generateTag()
+                    }
+
+                    return
+                }
+            }
+        }
+    }
+}
+
+
+//script.js line 544
+```
+
+**Element repetition**
+- Make a description.
+
+**Logic of isCurrency tree**
+- Make a description and diagram.
+
 
 
 ### Communication and data manipulation.
 Saving and loading data.
 Communication between content scripts and popup.
 
+
+
 ### Algorithms.
-isCurrency algorithm.
-getAmount algorithm.
+#### isPrice
+#### getAmount
+
+
 
 ### Errors.
+
+
 
 ### GUI.
 Display tag.
