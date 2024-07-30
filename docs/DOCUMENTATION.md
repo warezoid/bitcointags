@@ -279,7 +279,11 @@ Monitoring the DOM structure consists of attaching event listeners to elements, 
 Event listeners have four basic functions in DOM monitoring. Each of these listeners is described in detail below.
 
 #### Mouseover
-The mouseover event listener is activated when the user hovers the mouse cursor over any HTML element on the page. In the context of Bitcointags, this listener calls the [isPrice algorithm](#isprice) each time it is activated, which determines whether the text in the selected element contains a price with the supported currency. Other events follow, which are described in detail below.
+The mouseover event listener is activated when the user hovers the mouse cursor over any HTML element on the page. In the context of Bitcointags, this listener calls the [isCurrency algorithm](#isCurrency) on each activation to determine whether the text in the selected element contains a price with the supported currency.
+
+If successful, it triggers the tag generation function and sets up the [mouseleave](#mouseleave) event listener described below.
+
+Successful listing is preceded by several additional steps, which are described below.
 
 ```javascript
 previousElement = currentElement
@@ -316,11 +320,36 @@ if(currentElement && previousElement){
 //script.js line 544
 ```
 
-**Element repetition**
-- Make a description.
+To better understand the code above, the following diagram can be used.
 
-**Logic of isCurrency tree**
-- Make a description and diagram.
+![API call diagram.](img/diagram_2.svg)
+
+**Element repetition check**
+Each time the listener of the mouseover event is activated, the current and previous HTML elements are set to check if they are not the same. This is to ignore the situation where the user moves the mouse cursor in the nested HTML element area. This addresses the repeated display of the tag. This is both a slight optimization and a graphically better solution.
+
+**Problem of sibling elements**
+Bitcointags contain a loop that is triggered if the first query of the isCurrency function fails. This loop solves the problem of sibling HTML elements that contain a split price for a product or service. The solution is implemented by a loop that is repeated five times along with the first query of the isCurrency function. With each repetition, the current element is set as the parent element of the previous element, thus gradually ascending the hierarchical structure of the document. The issue can be understood by following the example code below.
+
+```html
+<div class="full-price">
+    <div class="price">
+        <span class="whole-price">9</span>
+        <span>.</span>
+        <span class="decimal-price">99</span>   <!-- user hover this element -->
+    </div>
+
+    <div class="currency">$</div>
+</div>
+
+
+<!-- Demonstration code 1 -->
+```
+
+
+
+#### Mouseleave
+
+
 
 
 
@@ -331,7 +360,7 @@ Communication between content scripts and popup.
 
 
 ### Algorithms.
-#### isPrice
+#### isCurrency
 #### getAmount
 
 
