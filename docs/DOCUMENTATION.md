@@ -264,7 +264,7 @@ if(preferredCurrency != ""){
 }
 
 
-//script.js line 496
+//script.js line 495
 ```
 
 
@@ -317,7 +317,7 @@ if(currentElement && previousElement){
 }
 
 
-//script.js line 544
+//script.js line 543
 ```
 
 To better understand the code above, the following diagram can be used.
@@ -346,10 +346,66 @@ Bitcointags contain a loop that is triggered if the first query of the isCurrenc
 ```
 
 
+#### Mouseout
+The mouseout event listener is attached to the entire window and is used to capture the moment when the user leaves the window they are currently in with the mouse cursor. This event fires the removeTag function mentioned below.
+
 
 #### Mouseleave
+The mouseleave event listener is attached to the current element that has passed the isCurreny algorithm without any problems. This event is triggered when the mouse cursor leaves the current element. When the event listener is activated, the removeTag function is triggered, which sets Bitcointags to the default state. The default state is a state where the tag is not displayed on the page and is set to its original state, while no event listeners are attached to the current element and no refreshTimeout is running.
+
+Below you can find the code of the removeTag function.
+
+```javascript
+currentElement.removeEventListener("mousemove", tagMovement)
+currentElement.removeEventListener("mouseleave", removeTag)
+
+tag.style.opacity = "0"
+
+clearTimeout(refreshTimeout)
+
+if(document.head.contains(animationStyles)){
+    document.head.removeChild(animationStyles)
+}
+
+continueLoading = 1
+
+contentContainer.style.opacity = "0"
+contentContainer.style.animation = ""
+
+mainContainer.style.opacity = "0"
+errorContainer.style.opacity = "0"
+
+loadingContainer.style.opacity = "1"
+loadingContainer.style.animation = ""
 
 
+//script.js line 776
+```
+
+
+#### Mousemove
+The mousemove event listener is attached to the current element that passed the isCurrency algorithm. The activation occurs when the user starts moving the mouse cursor on the current element. When this event is fired, the tagMovement function is called, which takes care of moving the tag at the same time as the mouse cursor. At the same time, the tagMovement function makes sure that the tag is not displayed off the page. The tagMovement function can be found below.
+
+```javascript
+let transX = 5
+let transY = 21
+
+if((e.clientX + 280) > window.innerWidth){
+    transX = -105
+}
+
+if((e.clientY + 70) > window.innerHeight){
+    transY = -121
+}
+
+tag.style.transform = `translate(${transX}%, ${transY}%)`
+
+tag.style.left = `${e.pageX}px`
+tag.style.top = `${e.pageY}px`
+
+
+//script.js line 800
+```
 
 
 
