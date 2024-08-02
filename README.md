@@ -126,27 +126,27 @@ The Graphical User Interface (GUI) is a **extension popup** that is used to **cu
 **On/Off button**
 The on/off button is used to **activate and deactivate Bitcointags**. When Bitcointags are **disabled**, there is **no listening** on the page or **calling the CoinCap API 2.0**, so **Bitcointags are not active**.
 
-![GUI](docs/img/detailedGui_1.svg)
+![GUI - On/Off button](docs/img/detailedGui_1.svg)
 
 **BTC/sats button**
 The BTC/sats button determines whether the **resulting price** returned by Bitcointags is displayed in **bitcoins or satoshi**. **Satoshi** is a **subunit of bitcoin**, specifically **one hundred millionth of a bitcoin**.
 
-![GUI](docs/img/detailedGui_2.svg)
+![GUI - BTC/sats button](docs/img/detailedGui_2.svg)
 
 **Maximum satoshi textbox**
 The value in the textbox specifies the **amount of satoshi** at which the **price returned by Bitcointags** will be **displayed in satoshi** when **satoshi mode is enabled**. If the price **exceeds** this amount, it will be **displayed in bitcoins**. The user can set an **integer** from **1 to 999,999,999**. This setting prevents **incorrect formatting of the tag**. The default value is **9,999,999 satoshi**.
 
-![GUI](docs/img/detailedGui_3.svg)
+![GUI - Maximum satoshi textbox](docs/img/detailedGui_3.svg)
 
 **Save button**
 The Save button is used to **save the new settings**.
 
-![GUI](docs/img/detailedGui_4.svg)
+![GUI - Save button](docs/img/detailedGui_4.svg)
 
 **Github logo**
 Clicking on the GitHub logo will **redirect you** to the Bitcointags **repository on GitHub**.
 
-![GUI](docs/img/detailedGui_5.svg)
+![GUI - Github logo](docs/img/detailedGui_5.svg)
 
 
 
