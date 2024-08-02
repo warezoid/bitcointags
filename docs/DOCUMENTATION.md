@@ -7,6 +7,7 @@ This document describes the technically key parts of the Bitcointags program. I 
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Contact](#contact)
 - [Terminology](#terminology)
 - [Functional Principles](#functional-principles)
     - [Supported currencies](#supported-currencies)
@@ -17,13 +18,13 @@ This document describes the technically key parts of the Bitcointags program. I 
 
 ## Introduction
 
-
+## Contact
 
 
 ## Terminology
 - **Tag**: HTML element that Bitcointags adds to the page. You can see the tag below.
 - **DOM (Document object model)**: Structured tree model of the document, where each element of the document is represented as an object. For more information, you can visit [Document Object Model](https://wikipedia.org/wiki/Document_Object_Model) on [Wikipedia](https://wikipedia.org).
-
+- **GUI (Graphical User Interface)**: In the context of Bitcointags, the GUI can be understood as the extension's popup window.
 
 
 ## Functional Principles
@@ -409,9 +410,43 @@ tag.style.top = `${e.pageY}px`
 
 
 
-### Communication and data manipulation.
-Saving and loading data.
-Communication between content scripts and popup.
+### Data manipulation.
+The data manipulation section describes the process of saving data, retrieving data, and communication between the GUI window and the content script. I decided to combine the subsection on data storage with the subsection on intercommunication mentioned earlier because they are closely related.
+
+The Chrome Storage API is used to store the data. More information about this API can be found in the [official documentation](https://developer.chrome.com/docs/extensions/reference/api/storage).
+
+#### Saving data and intercommunication
+The data saving process can only be initiated from the GUI side. It takes place after activating the connected event listener by clicking on the *Save* button shown below, and then checking that the maxSatoshi value is not zero.
+
+![GUI - Save button](img/detailedGui_4.svg)
+
+Below is the event listener code that activates the saveConfig function, which takes care of saving data and communicating with each other.
+
+```javascript
+if(!isZero(input)){   
+    formContainer.style.pointerEvents = "none"
+    textboxContainer.style.pointerEvents = "none"
+
+    formContainer.style.animation = "replaceContainers 0.5s forwards"
+    saveBtn.style.animation = "squeeze 0.5s"
+
+    saveConfig()
+
+    return
+}
+
+textboxValue.style.animation = "errorShake 0.2s 2"
+
+
+//popup.js line 423
+```
+
+**SaveConfig function**
+
+
+#### Loading data
+
+
 
 
 
