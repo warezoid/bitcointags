@@ -521,13 +521,64 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 ```
 
 **Checksum process**
+The Checksum process is used to check whether the new data has been correctly stored in the synchronous storage and whether Bitcointags are using the current data.
+
+It works by creating a digital fingerprint of the data object retrieved from the synchronous storage after receiving a message about the newly stored data and comparing it with the digital fingerprint of the data that was stored in the synchronous storage before the message was sent. Digital fingerprint in this context means the output of the SHA-1 hashing function, hereafter referred to as *hash*. To create the hash, the *getHash* function is called, which is part of both the GUI and the content script.
+
+Below you can find the code of the *getHash* function.
+
+```javascript
+let inputBuffer = new TextEncoder().encode(input)
+
+return crypto.subtle.digest("SHA-1", inputBuffer).then((hash) => {
+    window.hash = hash;
+
+    let result = ""
+    const view = new DataView(hash)
+
+    for (let i = 0; i < hash.byteLength; i += 4){
+        result += ('00000000' + view.getUint32(i).toString(16)).slice(-8)
+    }
+
+    return result
+})
 
 
+//script.js line 340, popup.js line 475
+```
+
+Hashing is the process of extracting a unique output of a fixed size from data of arbitrary size. The key is that this process is not random, but uses well-defined operations, which means that the same data will always return the same output.
+
+Bitcointags could certainly work without this principle, but as a developer I find it advantageous to work with data that is constant in form and size. I chose the SHA-1 hashing algorithm which, although not the latest and containing collisions, is efficient enough to optimize Bitcointags and meet my needs.
+
+Bitcointags use the Web Crypto API, which you can learn more about in the [official documentation](https://www.w3.org/TR/WebCryptoAPI).
+
+The checksum process starts in the content script after the data is successfully retrieved from the synchronous storage. Below you will find the code that calls the *getHash* function and then sends the output hash in response to a message about the newly saved data to the GUI.
+
+```javascript
+getHash(JSON.stringify(config)).then((hash) => {
+    sendResponse(hash)
+})
 
 
+//script.js line 322
+```
 
+After receiving the response, the GUI calls the *getHash* function, using as input the object that was previously stored in the synchronized storage. It then compares both hashes. If the hashes do not match, an error message is displayed in the GUI. However, Bitcointags continues to operate without error, but works with the data it was using previously.
 
+Below is the code that receives the response, generates a new hash, and then compares both hashes.
 
+```javascript
+getHash(JSON.stringify(obj)).then((hash) => {
+    if(response == hash){
+        processingStatus = 2
+    }
+    
+    continueLoading = 0
+})
+
+//popup.js line 449
+```
 
 
 #### Loading data
