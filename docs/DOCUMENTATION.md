@@ -484,6 +484,45 @@ chrome.storage.sync.set({"bitcointagsConfig": obj}, () => {
 ```
 
 **Intercommunication**
+Intercommunication can be understood as the process of exchanging information about newly stored data and data needed for the checksum process between the GUI and the content script.
+
+The GUI initiates the communication by sending a message to the content script using the Chrome Tabs API about the newly saved data. The content script receives the message and retrieves the current data from the synchronous storage. This is followed by the data update process, which is described in more detail in the [Tag setting](#tag-setting) section, and the checksum process, which is described below.
+
+The code that initiates the intercommunication is also found below and follows the data storage code above.
+
+```javascript
+chrome.tabs.query({active: true, currentWindow: true}).then((tab) => {
+    chrome.tabs.sendMessage(tab[0].id, "dataSaved", (response) => {
+        //checksum process code...
+    })
+})
+
+
+//popup.js line 447
+```
+
+The following code receives the message, reads the current data and starts the checksum process.
+
+```javascript
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if(message == "dataSaved"){
+        chrome.storage.sync.get(["bitcointagsConfig"], (response) => {     
+            config = response.bitcointagsConfig
+            
+            //checksum and data update process...
+        })
+
+        return true
+    }
+})
+
+
+//script.js line 315
+```
+
+**Checksum process**
+
+
 
 
 
@@ -492,8 +531,6 @@ chrome.storage.sync.set({"bitcointagsConfig": obj}, () => {
 
 
 #### Loading data
-
-
 
 
 
@@ -508,18 +545,10 @@ chrome.storage.sync.set({"bitcointagsConfig": obj}, () => {
 
 
 ### GUI.
-Display tag.
-Loading animation.
-Switching scenes.
-
-
-
-
-
-
-
-
-
+#### Tag setting
+#### Display tag.
+#### Loading animation.
+#### Switching scenes.
 
 
 
