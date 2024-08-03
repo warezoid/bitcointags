@@ -25,6 +25,7 @@ This document describes the technically key parts of the Bitcointags program. I 
 - **Tag**: HTML element that Bitcointags adds to the page. You can see the tag below.
 - **DOM (Document object model)**: Structured tree model of the document, where each element of the document is represented as an object. For more information, you can visit [Document Object Model](https://wikipedia.org/wiki/Document_Object_Model) on [Wikipedia](https://wikipedia.org).
 - **GUI (Graphical User Interface)**: In the context of Bitcointags, the GUI can be understood as the extension's popup window.
+- **Content scripts**: A file that runs in the context of a web page. In the context of Bitcointags, a content script can be thought of as a **script.js** file, which is the core of Bitcointags.
 
 
 ## Functional Principles
@@ -441,7 +442,53 @@ textboxValue.style.animation = "errorShake 0.2s 2"
 //popup.js line 423
 ```
 
-**SaveConfig function**
+##### SaveConfig function
+The saveConfig function is used for the following operations:
+
+- Saves data with the Bitcointags settings that the user has chosen.
+- In real time, it passes information about new data storage to the content script.
+- Checksum process.
+
+The diagram below can be used to show the time continuity between the activities.
+
+![SaveConfig function diagram.](img/diagram_3.svg)
+
+For better clarity I have decided to describe the individual operations separately.
+
+**Data storage**
+Data is stored via the Chrome Storage API. I chose synchronous storage, which unlike local storage is available in all browsers where you are logged in with the same account. For more information, see the official [Chrome Storage API documentation](https://developer.chrome.com/docs/extensions/reference/api/storage).
+
+The data that is stored in the synchronous storage under the *bitcointagsConfig* key is used to modify the tag view. Below is the structure of the object that is stored in the synchronous repository.
+
+```
+{btcModeEnable, extensionEnable, maxSatoshi}
+```
+
+*ExtensionEnable* affects whether Bitcointags are enabled. *BtcModeEnable* determines whether the converted price in the tag is displayed in bitcoins or satoshi. *MaxSatoshi* specifies the number of satoshi at which the price returned by Bitcointags will be displayed in satoshi if satoshi mode is enabled. For more detailed information about these values, please refer to the [README.md](../README.md) file, specifically the [GUI description](../README.md#gui-description) subsection.
+
+Below is the code that creates and saves the data object to the synchronous storage.
+
+```javascript
+let obj = {
+    btcModeEnable,
+    extensionEnable,
+    maxSatoshi: toBtc(input)
+}
+
+chrome.storage.sync.set({"bitcointagsConfig": obj}, () => {
+    //intercommunication and checksum process code...
+})
+
+
+//popup.js line 439
+```
+
+**Intercommunication**
+
+
+
+
+
 
 
 #### Loading data
