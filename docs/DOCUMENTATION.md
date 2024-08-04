@@ -486,7 +486,7 @@ chrome.storage.sync.set({"bitcointagsConfig": obj}, () => {
 **Intercommunication**
 Intercommunication can be understood as the process of exchanging information about newly stored data and data needed for the checksum process between the GUI and the content script.
 
-The GUI initiates the communication by sending a message to the content script using the Chrome Tabs API about the newly saved data. The content script receives the message and retrieves the current data from the synchronous storage. This is followed by the data update process, which is described in more detail in the [Tag setting](#tag-setting) section, and the checksum process, which is described below.
+The GUI initiates the communication by sending a message to the content script using the Chrome Tabs API about the newly saved data. The content script receives the message and retrieves the current data from the synchronous storage. This is followed by the data update process, which is described in more detail in the [Loading data](#loading-data) section, and the checksum process, which is described below.
 
 The code that initiates the intercommunication is also found below and follows the data storage code above.
 
@@ -577,11 +577,72 @@ getHash(JSON.stringify(obj)).then((hash) => {
     continueLoading = 0
 })
 
+
 //popup.js line 449
 ```
 
 
 #### Loading data
+The data loading section describes the processes of loading data, updating existing data, and the processes that follow. Data loading is done both in the GUI and in the content script. For better clarity, the text is split separately.
+
+Data is stored via the Chrome Storage API. I chose synchronous storage, which unlike local storage is available in all browsers where you are logged in with the same account. For more information, see the official [Chrome Storage API documentation](https://developer.chrome.com/docs/extensions/reference/api/storage).
+
+##### Content script
+Data loading in the content script takes place in two places:
+
+- When a message is received about newly saved data.
+- When the program is initialized.
+
+Loading data on receipt of the newly saved data message is described above and will not be discussed again in this section. Information not covered above works on the same principle, which will be described below. The following is the code for the function that takes care of retrieving the data when the program is initialized.
+
+```javascript
+chrome.storage.sync.get(["bitcointagsConfig"], (response) => {
+    let bitcointagsConfig = response.bitcointagsConfig
+
+    if(bitcointagsConfig){
+        config = bitcointagsConfig
+    }
+
+    if(config.extensionEnable){
+        apiCall()
+    }
+})
+
+
+//script.js line 303
+```
+
+This function calls an object with the *bitcointagsConfig* key in the synchronous storage. On successful retrieval, it sets the *config* variable as a pointer to the retrieved object. The *config* object is the same as the *obj* object described above in [SaveConfig function](#saveconfig-function) section. The following condition eventually calls the *apiCall* function described above in [Periodic API Calls](#periodic-api-calls) section, which activates Bitcointags.
+
+##### GUI
+Data loading in the GUI takes place only at one moment, 1000 milliseconds after the program initialization. Part of loading data in the GUI is also setting it to the state in which the user left the GUI. Below is the function that takes care of loading data in the GUI.
+
+```javascript
+setTimeout(() => {
+    document.head.appendChild(styleElement)
+
+    chrome.storage.sync.get(["bitcointagsConfig"], (response) => {
+        let bitcointagsConfig = response.bitcointagsConfig
+
+        if(bitcointagsConfig){
+            extensionEnable = bitcointagsConfig.extensionEnable
+            btcModeEnable = bitcointagsConfig.btcModeEnable
+
+            input = toSats(bitcointagsConfig.maxSatoshi)
+            previousInput = input
+
+            setDefault()
+        }
+        
+        continueLoading = 0
+    })
+}, 1000)
+
+
+//popup.js line 345
+```
+
+The above function takes care of the seconds interval, which replaces the *DOMContentLoaded* event listener, which I found to be negative. The next step is to call the data, update the existing data, and reset the GUI to its original state using the *setDefault* function.
 
 
 
@@ -596,7 +657,6 @@ getHash(JSON.stringify(obj)).then((hash) => {
 
 
 ### GUI.
-#### Tag setting
 #### Display tag.
 #### Loading animation.
 #### Switching scenes.
