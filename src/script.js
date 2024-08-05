@@ -583,7 +583,6 @@ const isCurrency = () => {
         currencyValue = currencyValue.replace(/[0-9]/g, "")
         fullValue = fullValue.replace(currencyValue, '')
 
-
         if(fullValue != "" && !isZero(fullValue)){
             for(let i = 0; i < currencies.length; i++) {
                 const { ticker, symbol } = currencies[i];
@@ -595,7 +594,7 @@ const isCurrency = () => {
                         ammount = getAmount(fullValue)
                         
                         if(!isNaN(ammount)){
-                            isValid =  1
+                            isValid = 1
                         }
                     }
                     else{
