@@ -281,7 +281,7 @@ Monitoring the DOM structure consists of attaching event listeners to elements, 
 Event listeners have four basic functions in DOM monitoring. Each of these listeners is described in detail below.
 
 #### Mouseover
-The mouseover event listener is activated when the user hovers the mouse cursor over any HTML element on the page. In the context of Bitcointags, this listener calls the [isCurrency algorithm](#isCurrency) on each activation to determine whether the text in the selected element contains a price with the supported currency.
+The mouseover event listener is activated when the user hovers the mouse cursor over any HTML element on the page. In the context of Bitcointags, this listener calls the [isCurrency algorithm](#iscurrency) on each activation to determine whether the text in the selected element contains a price with the supported currency.
 
 If successful, it triggers the tag generation function and sets up the [mouseleave](#mouseleave) event listener described below.
 
@@ -647,7 +647,69 @@ The above function takes care of the seconds interval, which replaces the *DOMCo
 
 
 ### Algorithms.
+Algorithms in Bitcointags are defined as functions and processes containing advanced logic. Their development was done with versatility in mind, which allows easy implementation of these algorithms in various applications.
+
 #### isCurrency
+The isCurrency algorithm determines whether the current element contains the supported currency in the correct format. This algorithm is called whenever the [mouseover](#mouseover) event listener described above is activated.
+
+Algorithm outputs:
+
+- When the logic is **positive**, the algorithm returns the value of **logic one**.
+- When the logic is **negative**, the algorithm returns the value of **logical zero**.
+
+Within Bitcointags, the isCurrency algorithm is called inside a condition.
+
+For better clarity, I have divided the description of the isCurrency algorithm into several parts. You can see the full code of the IsCurrency algorithm below.
+
+```javascript
+let isValid = 0
+let fullValue = currentElement?.innerText
+
+if(fullValue){
+    fullValue = fullValue.toLowerCase().replace(/\s/g, '')
+    let currencyValue = fullValue.replace(/(\d),(\d)|(\d)\.(\d)/g, '$1$3$2$4')
+
+    currencyValue = currencyValue.replace(/[0-9]/g, "")
+    fullValue = fullValue.replace(currencyValue, '')
+
+    if(fullValue != "" && !isZero(fullValue)){
+        for(let i = 0; i < currencies.length; i++) {
+            const { ticker, symbol } = currencies[i];
+
+            if(symbol.includes(currencyValue)){
+                if(ticker != "btc"){
+                    currency = ticker
+                    preferredCurrency = currency
+                    ammount = getAmount(fullValue)
+                    
+                    if(!isNaN(ammount)){
+                        isValid = 1
+                    }
+                }
+                else{
+                    console.log(
+                        `%cBitcoinTags:%c "${quotes[Math.floor(Math.random() * quotes.length)]}"`,
+                        'color: #f7931a; font-size: 12px; font-weight: 900;',
+                        'color: #f7931a; font-size: 12px; font-style: italic;'
+                    )
+                }
+    
+                return isValid
+            }
+        }
+    }
+}
+
+return isValid
+
+
+//script.js line 575
+```
+
+
+
+
+
 #### getAmount
 
 
