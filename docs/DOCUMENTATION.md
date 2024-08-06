@@ -340,7 +340,7 @@ if(currentElement && previousElement){
 
 To better understand the code above, the following diagram can be used.
 
-![API call diagram.](img/diagram_2.svg)
+![Mouseover event listener diagram.](img/diagram_2.svg)
 
 **Element repetition check**
 Each time the listener of the mouseover event is activated, the current and previous HTML elements are set to check if they are not the same. This is to ignore the situation where the user moves the mouse cursor in the nested HTML element area. This addresses the repeated display of the tag. This is both a slight optimization and a graphically better solution.
@@ -666,16 +666,19 @@ The above function takes care of the seconds interval, which replaces the *DOMCo
 Algorithms in Bitcointags are defined as functions and processes containing advanced logic. Their development was done with versatility in mind, which allows easy implementation of these algorithms in various applications.
 
 #### isCurrency
-The isCurrency algorithm determines whether the current element contains the supported currency in the correct format. This algorithm is called whenever the [mouseover](#mouseover) event listener described above is activated.
+The isCurrency algorithm determines whether the text value in the current element, if any, contains a currency symbol from the list of supported currencies, or whether it is in a format compatible with Bitcointags.
 
-Algorithm outputs:
+If the text value passes positive logic, the algorithm returns a logical one, allowing the program to continue. If not, the program does not continue. Therefore, in Bitcointags, the isCurrency algorithm is always called inside a condition.
 
-- When the logic is **positive**, the algorithm returns the value of **logic one**.
-- When the logic is **negative**, the algorithm returns the value of **logical zero**.
+The value returned by the isCurrency algorithm is also affected by the output of the getAmount function, which is described separately below.
 
-Within Bitcointags, the isCurrency algorithm is called inside a condition.
+The algorithm is called whenever the listener is activated by the mouseover event described above.
 
-For better clarity, I have divided the description of the isCurrency algorithm into several parts. You can see the full code of the IsCurrency algorithm below.
+For a better understanding, the diagram below can be used.
+
+![IsCurrency algorithm diagram.](img/diagram_4.svg)
+
+Below is the diagram converted into code.
 
 ```javascript
 let isValid = 0
@@ -703,11 +706,7 @@ if(fullValue){
                     }
                 }
                 else{
-                    console.log(
-                        `%cBitcoinTags:%c "${quotes[Math.floor(Math.random() * quotes.length)]}"`,
-                        'color: #f7931a; font-size: 12px; font-weight: 900;',
-                        'color: #f7931a; font-size: 12px; font-style: italic;'
-                    )
+                    //???...
                 }
     
                 return isValid
