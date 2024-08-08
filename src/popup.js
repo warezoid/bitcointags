@@ -341,6 +341,20 @@ const showStatus = () => {
 
 
 let processingStatus = -1
+let message = ""
+
+const clearStorage = (e) => {    
+    message += e.key
+
+    if(message == "clearsync"){                
+        chrome.storage.sync.remove("bitcointagsConfig", () => {
+            processingStatus = 0
+            continueLoading = 0
+        })
+    }
+}
+
+document.addEventListener("keypress", clearStorage)
 
 setTimeout(() => {
     document.head.appendChild(styleElement)
@@ -363,6 +377,8 @@ setTimeout(() => {
 }, 1000)
 
 const setDefault = () => {
+    document.removeEventListener("keypress", clearStorage)
+
     textboxValue.innerText = addSpacing(input)
 
     if(!btcModeEnable){
@@ -476,7 +492,7 @@ const getHash = async (input) => {
     let inputBuffer = new TextEncoder().encode(input)
 
     return crypto.subtle.digest("SHA-1", inputBuffer).then((hash) => {
-        window.hash = hash;
+        window.hash = hash
 
         let result = ""
         const view = new DataView(hash)
