@@ -26,7 +26,6 @@ Bitcointags is a browser extension that converts the fiat price of a product or 
 
 ## Coming soon...
 - Fix text editing bug in isCurrency algorithm.
-- Solve GUI not loading problem.
 - Complete extensive documentation.
 - Select&convert mode.
 - It tells you whether the e-shop accepts bitcoins.
@@ -213,7 +212,8 @@ Error message is a **short description** of the error. The message should help i
 - ***Why Bitcointags doesn't have a light mode?***
     - I couldn't come up with a ligth mode design that I liked enough.
 
-
+- ***The GUI got stuck when loading an animation. What should I do?***
+    - If you have migrated from version 1.1.14 or earlier to version 1.1.15 or later, you may experience the problem listed above. The solution is to type the "clearsync" when you launch the GUI. If the operation is successful, the loading animation will complete and the window will close automatically. After restarting, the application should work properly. You can use this procedure at any time, but keep in mind that it will clear the synchronized storage, which will result in the loss of your settings for Bitcointags. 
 
 ## Sources
 Sources can be seen as links to products used in Bitcointags, including APIs, graphics, research tools, and of course Bitcoin, without which this project and many others would not exist. I have chosen not to list elementary products such as HTML, CSS, JavaScript, and many others.
