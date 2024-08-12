@@ -729,14 +729,54 @@ return isValid
 
 
 
+### Graphic.
+#### Display tag
+#### Loading animation
+#### Switching scenes
+
+
+
 ### Errors.
+The *Errors* section focuses on logging errors and their possible handling in the content script and the graphical user interface (GUI). Also included in the GUI subsection is a description of the [clearStorage method](#clearstorage-method), which removes the *bitcointagsConfig* entry in the synchronous repository and can be used as a workaround when migrating from version 1.1.14 or earlier to version 1.1.15 or later.
+
+#### Content scripts
+In the content script, errors are logged to the *statusCode* variable during the API call. This topic is already described above in the [Getting the financial data](#getting-the-financial-data) section and therefore will not be discussed further here.
+
+Error evaluation begins after a successful call to the [isCurrency algorithm](#iscurrency) during tag generation. Two error conditions can occur in the content script. The difference is whether the error occurred during the first API call.
+
+If so, the data from the API was not successfully retrieved, and therefore the values needed to convert the price to bitcoins are not available, resulting in Bitcointags having nothing to display and therefore an error tag. If the error did not occur on the first API call, Bitcointags work with data that was received before the error occurred. They will alert you to this condition by graying out the Bitcoin logo when the tag is displayed.
+
+Below you can find the code for evaluating the error logic in the *dataCompression* function described above in subsection [Display tag](#display-tag).
+
+```javascript
+if(bitcoinValue.price != null){
+    if(currency != "usd"){
+        if(fiatValue.rate != null){
+            obj.statusCode = (bitcoinValue.statusCode + fiatValue.statusCode) / 2
+            return obj
+        }
+
+        obj.statusCode = fiatValue.statusCode
+    }
+    
+    obj.statusCode = bitcoinValue.statusCode
+    return obj
+}
+
+obj.statusCode = bitcoinValue.statusCode
+return obj
 
 
+//script.js line 737
+```
 
-### GUI.
-#### Display tag.
-#### Loading animation.
-#### Switching scenes.
+***Break down the description of the logic...***
+
+
+#### GUI
+
+
+##### ClearStorage method
 
 
 

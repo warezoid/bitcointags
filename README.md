@@ -213,7 +213,7 @@ Error message is a **short description** of the error. The message should help i
     - I couldn't come up with a ligth mode design that I liked enough.
 
 - ***The GUI got stuck when loading an animation. What should I do?***
-    - If you have migrated from version 1.1.14 or earlier to version 1.1.15 or later, you may experience the problem listed above. The solution is to type the "clearsync" when you launch the GUI. If the operation is successful, the loading animation will complete and the window will close automatically. After restarting, the application should work properly. You can use this procedure at any time, but keep in mind that it will clear the synchronized storage, which will result in the loss of your settings for Bitcointags. 
+    - If you have migrated from version 1.1.14 or earlier to version 1.1.15 or later, you may experience the problem listed above. The solution is to type the "clearsync" when you launch the GUI. If the operation is successful, the loading animation will complete and the window will close automatically. After restarting, the application should work properly. You can use this procedure at any time, but keep in mind that it will clear the synchronized storage, which will result in the loss of your settings for Bitcointags. More information on this topic can be found in the [documentation](./docs/DOCUMENTATION.md), in the [Errors section](./docs/DOCUMENTATION.md#errors).
 
 ## Sources
 Sources can be seen as links to products used in Bitcointags, including APIs, graphics, research tools, and of course Bitcoin, without which this project and many others would not exist. I have chosen not to list elementary products such as HTML, CSS, JavaScript, and many others.
