@@ -746,6 +746,10 @@ Error evaluation begins after a successful call to the [isCurrency algorithm](#i
 
 If so, the data from the API was not successfully retrieved, and therefore the values needed to convert the price to bitcoins are not available, resulting in Bitcointags having nothing to display and therefore an error tag. If the error did not occur on the first API call, Bitcointags work with data that was received before the error occurred. They will alert you to this condition by graying out the Bitcoin logo when the tag is displayed.
 
+This logic can be better understood using the following diagram.
+
+![Error evaluation diagram.](img/diagram_5.svg)
+
 Below you can find the code for evaluating the error logic in the *dataCompression* function described above in subsection [Display tag](#display-tag).
 
 ```javascript
@@ -770,7 +774,14 @@ return obj
 //script.js line 737
 ```
 
-***Break down the description of the logic...***
+The initialization of the *statusCode* variable below can be confusing, so I decided to explain it in more detail.
+
+```javascript
+obj.statusCode = (bitcoinValue.statusCode + fiatValue.statusCode) / 2
+
+
+//script.js line 745
+```
 
 
 #### GUI
