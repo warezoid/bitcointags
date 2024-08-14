@@ -742,6 +742,7 @@ The *Errors* section focuses on logging errors and their possible handling in th
 #### Content scripts
 In the content script, errors are logged to the *statusCode* variable during the API call. This topic is already described above in the [Getting the financial data](#getting-the-financial-data) section and therefore will not be discussed further here.
 
+**Error evaluation**
 Error evaluation begins after a successful call to the [isCurrency algorithm](#iscurrency) during tag generation. Two error conditions can occur in the content script. The difference is whether the error occurred during the first API call.
 
 If so, the data from the API was not successfully retrieved, and therefore the values needed to convert the price to bitcoins are not available, resulting in Bitcointags having nothing to display and therefore an error tag. If the error did not occur on the first API call, Bitcointags work with data that was received before the error occurred. They will alert you to this condition by graying out the Bitcoin logo when the tag is displayed.
@@ -781,6 +782,33 @@ obj.statusCode = (bitcoinValue.statusCode + fiatValue.statusCode) / 2
 
 
 //script.js line 745
+```
+
+If the error evaluation successfully reaches the initialization phase above, the statusCode value is set as a proportion of the sum of the status codes from the CoinCap API 2.0 call that provides information about the bitcoin price and exchange rates of the selected currency. The above formula ensures that if both CoinCap API 2.0 calls are successful (i.e., both status codes are 200), the resulting statusCode value will be 200. However, if one of the calls ends with an error, the result will not be 200.
+
+**Final error evaluation**
+The above processes are followed by a final evaluation, which is shown in the diagram below.
+
+![Final error evaluation diagram.](img/diagram_6.svg)
+
+The final error evaluation code is shown below.
+
+```javascript
+if(compressedData.productPrice != null){
+    compressedData.upDown = getChange()
+
+    if(compressedData.statusCode != 200){
+        compressedData.grayscale = "100"
+    }
+
+    updateTag(compressedData)
+}
+else{
+    updateError(compressedData.statusCode)
+}
+
+
+//script.js line 707
 ```
 
 
