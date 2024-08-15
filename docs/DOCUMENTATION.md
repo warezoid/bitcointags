@@ -27,6 +27,11 @@ This document describes the technically key parts of the Bitcointags program. I 
             - [GUI](#gui)
     - [Algorithms](#algorithms)
         - [IsCurrency](#iscurrency)
+    - [Graphic](#graphic)
+    - [Errors](#errors)
+        - [Content script](#content-script)
+        - [GUI](#gui-1)
+            - [ClearStorage method](#clearstorage-method)
 - [Sources](#sources)
 - [Acknowledgements](#acknowledgements)
 
