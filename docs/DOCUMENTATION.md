@@ -813,6 +813,29 @@ else{
 
 
 #### GUI
+Bitcointags are able to log an error when saving user settings to the [Chrome Storage API](https://developer.chrome.com/docs/extensions/reference/api/storage). The way they do this is described above in the [Saving Data and Intercommunication section](#saving-data-and-intercommunication).
+
+The GUI subsection of the [Errors section](#errors) therefore focuses on the error evaluation logic, which is the handling of the *processingStatus* variable. To understand the topic mentioned earlier, the following diagram can be used.
+
+![GUI error evaluation diagram.](img/diagram_7.svg)
+
+Below is the *showStatus* function, which displays the status container and then sets the value of the *processingStatus* variable to its **absolute value**.
+
+```javascript
+statusElement = document.getElementById("error-status-container")
+
+if(processingStatus > 0){
+    statusElement = document.getElementById("ok-status-container")
+}
+
+processingStatus = Math.abs(processingStatus)
+
+statusElement.style.display = "flex"
+loadingContainer.style.animation = "replaceContainers 0.5s forwards"
+
+
+//popup.js line 328
+```
 
 
 ##### ClearStorage method
