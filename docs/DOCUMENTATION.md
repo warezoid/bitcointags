@@ -844,6 +844,23 @@ loadingContainer.style.animation = "replaceContainers 0.5s forwards"
 
 
 ##### ClearStorage method
+The clearStorage function is used to remove an item with the *bitcointagsConfig* key from the synchronous storage. This action resolves a loading animation stutter issue that can occur when migrating from version 1.1.14 and earlier to version 1.1.15 and later. The problem lies in the renaming of the *maxSatoshi* variable. The Bitcointags application expects the *maxSatoshi* variable, but in the synchronous storage this value is stored under the name *minSatoshi*. This incorrect naming leads to a problem. Below is the code and description of the clearStorage function.
+
+```javascript
+message += e.key
+
+if(message == "clearsync"){                
+    chrome.storage.sync.remove("bitcointagsConfig", () => {
+        processingStatus = 0
+        continueLoading = 0
+    })
+}
+
+
+//popup.js line 346
+```
+
+When the program starts, a *keypress* event listener is added to the page, which is removed once the values from the Chrome Storage API have been successfully retrieved. This listener records keypress input and when the "clearsync" command is entered, Bitcointags will clear the synchronous storage entry with the *bitcointagsConfig* key. After that, the window closes and the user can restart the application without any problems. This functionality can also be used to clear the repository and restore Bitcointags to its default state.
 
 
 
