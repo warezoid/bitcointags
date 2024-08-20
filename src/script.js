@@ -573,45 +573,50 @@ const mouseOver = (e) => {
 }
 
 const isCurrency = () => {
-    let isValid = 0
     let fullValue = currentElement?.innerText
 
     if(fullValue){
-        fullValue = fullValue.toLowerCase().replace(/\s/g, '')
-        let currencyValue = fullValue.replace(/(\d),(\d)|(\d)\.(\d)/g, '$1$3$2$4')
+        if(/\d/.test(fullValue)){
+            fullValue = fullValue.toLowerCase().replace(/\s/g, '')
 
-        currencyValue = currencyValue.replace(/[0-9]/g, "")
-        fullValue = fullValue.replace(currencyValue, '')
+            let currencyValue = fullValue.replace(/(\d),(\d)|(\d)\.(\d)/g, '$1$3$2$4')
+            currencyValue = currencyValue.replace(/[0-9]/g, '')
 
-        if(fullValue != "" && !isZero(fullValue)){
-            for(let i = 0; i < currencies.length; i++) {
-                const { ticker, symbol } = currencies[i];
-    
-                if(symbol.includes(currencyValue)){
-                    if(ticker != "btc"){
-                        currency = ticker
-                        preferredCurrency = currency
-                        ammount = getAmount(fullValue)
-                        
-                        if(!isNaN(ammount)){
-                            isValid = 1
+            fullValue = fullValue.replace(currencyValue, '')          
+
+            if(!isZero(fullValue)){
+                let symbol
+
+                for(let i = 0; i < currencies.length; i++) {
+                    symbol = currencies[i].symbol
+                      
+                    if(symbol.includes(currencyValue)){
+                        if(currencies[i].ticker != "btc"){
+                            if(formatCheck(fullValue)){
+                                currency = currencies[i].ticker
+                                preferredCurrency = currency                              
+
+                                return 1
+                            }
+
+                            return 0
                         }
-                    }
-                    else{
+
                         console.log(
                             `%cBitcoinTags:%c "${quotes[Math.floor(Math.random() * quotes.length)]}"`,
                             'color: #f7931a; font-size: 12px; font-weight: 900;',
                             'color: #f7931a; font-size: 12px; font-style: italic;'
                         )
+
+                        return 0
                     }
-        
-                    return isValid
                 }
             }
+            
         }
     }
 
-    return isValid
+    return 0
 }
 
 const isZero = (value) => {  
@@ -624,75 +629,107 @@ const isZero = (value) => {
     return 1
 }
 
-const getAmount = (fullValue) => {
+const formatCheck = (fullValue) => {
     let countOfDots = getCount(fullValue, '.')
-    let countOfCommas = getCount(fullValue, ',')
+    let sum = countOfDots + getCount(fullValue, ',')
+    
+    if(sum){
+        if(sum == 1){
+            fullValue = fullValue.replace(',', '.')
 
-    if(countOfDots <= 1 && countOfCommas == 0){
-        if(isSeparator(fullValue, '.')){
-            fullValue = fullValue.replace(/\./g, '')
-        }
-
-        return fullValue;
-    }
-
-    if(!(countOfDots > 1 && countOfCommas > 1)){
-        if((countOfDots == 1 && isLast(fullValue, '.')) && countOfCommas > 1){
-            fullValue = fullValue.replace(/\,/g, '')
-        }
-        else if(countOfDots > 1 && (countOfCommas == 1 && isLast(fullValue, ','))){
-            fullValue = fullValue.replace(/\./g, '').replace(',', '.')
-        }
-        else if(countOfDots == countOfCommas){
-            fullValue = fullValue.replace(/[^0-9]/, '').replace(',', '.')
-        }
-        else if(countOfDots == 0 && countOfCommas >= 1){
-            if(countOfCommas > 1){
-                fullValue = fullValue.replace(/\,/g, '')
+            if(fullValue.split('.')[1].length == 3){
+                fullValue = fullValue.replace('.', '')
             }
-            else{
-                if(isSeparator(fullValue, ',')){
-                    fullValue = fullValue.replace(/\,/g, '')
+
+            ammount = fullValue
+            return 1
+        }
+
+
+        let countOfCommas = sum - countOfDots 
+
+        if(sum == 2){
+            fullValue = fullValue.replace(/,/g, '.')
+            
+            if(!countOfDots || !countOfCommas){
+                if(separatorCheck(fullValue)){
+                    fullValue = fullValue.replace(/\./g, '')
+                    
+                    ammount = fullValue
+                    return 1
                 }
-                else{
-                    fullValue = fullValue.replace(',', '.')
+
+                return 0
+            }
+
+            let wVar = fullValue.substring(0, fullValue.lastIndexOf('.'))
+
+            if(separatorCheck(wVar)){               
+                fullValue = fullValue.replace(/\D/, '')
+
+                ammount = fullValue
+                return 1
+            }
+
+            return 0
+        }
+
+        
+        if(!countOfDots || !countOfCommas){
+            fullValue = fullValue.replace(/,/g, '.')
+
+            if(separatorCheck(fullValue)){
+                fullValue = fullValue.replace(/\./g, '')
+                
+                ammount = fullValue
+                return 1
+            }
+
+            return 0
+        }
+
+        if(countOfDots * countOfCommas == sum - 1){
+            let wVar = fullValue.replace(/,/g, '.')
+            wVar = wVar.substring(0, wVar.lastIndexOf('.'))
+
+            if(separatorCheck(wVar)) {
+                wVar = fullValue.replace(/[0-9]/g, '')
+
+                if(getCount(wVar, wVar[wVar.length - 1]) == 1){
+                    fullValue = fullValue.replace(/,/g, '.')
+                    ammount = fullValue.replace(/\.(?=.*\.)/g, '')
+
+                    return 1
                 }
             }
         }
-        else if(countOfDots > 1 && countOfCommas == 0){
-            fullValue = fullValue.replace(/\./g, '')
-        }
-        else{
-            return NaN
-        }
 
-        return fullValue
+        return 0
     }
-
-    return NaN
+    
+    ammount = fullValue
+    return 1
 }
 
 const getCount = (fullValue, char) => {
     return fullValue.length - fullValue.replace(new RegExp(`\\${char}`, 'g'), '').length
 }
 
-const isLast = (fullValue, char) => {
-    let value = fullValue.replace(/[0-9]/g, '')
+const separatorCheck = (value) => {   
+    let wVar = value.split('.')  
 
-    if(value.indexOf(char) == (value.length - 1)){
+    if(wVar[0].length <= 3){
+        for(let i = 1; i < wVar.length; i++){
+            if(wVar[i].length != 3){
+                return 0
+            }
+        }
+
         return 1
     }
 
     return 0
 }
-
-const isSeparator = (fullValue, char) => {
-    let regex = new RegExp(`^\\d{1,3}\\${char}\\d{3}`)
-
-    return regex.test(fullValue)
-}
-
-
 
 let refreshTimeout
 
