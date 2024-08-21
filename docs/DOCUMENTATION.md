@@ -47,6 +47,7 @@ This document describes the technically key parts of the Bitcointags program. I 
 - **DOM (Document object model)**: Structured tree model of the document, where each element of the document is represented as an object. For more information, you can visit [Document Object Model](https://wikipedia.org/wiki/Document_Object_Model) on [Wikipedia](https://wikipedia.org).
 - **GUI (Graphical User Interface)**: In the context of Bitcointags, the GUI can be understood as the extension's popup window.
 - **Content scripts**: A file that runs in the context of a web page. In the context of Bitcointags, a content script can be thought of as a **script.js** file, which is the core of Bitcointags.
+- **Sieve effect**: Minimizing unnecessary operations and quickly detect unsupported inputs. This approach can be compared to the gold panning process, where the clay is first sieved through coarse screens, then through finer screens, and finally the remaining particles are hand panned. This is where the sieve effect comes from.
 
 
 ## Functional Principles
@@ -671,13 +672,13 @@ The above function takes care of the seconds interval, which replaces the *DOMCo
 Algorithms in Bitcointags are defined as functions and processes containing advanced logic. Their development was done with versatility in mind, which allows easy implementation of these algorithms in various applications.
 
 #### isCurrency
-The isCurrency algorithm determines whether the text value in the current element, if any, contains a currency symbol from the list of supported currencies, or whether it is in a format compatible with Bitcointags.
+The isCurrency algorithm determines whether the text value in the current element, if any, contains a currency symbol from the list of supported currencies and whether it is in a format compatible with Bitcointags.
 
 If the text value passes positive logic, the algorithm returns a logical one, allowing the program to continue. If not, the program does not continue. Therefore, in Bitcointags, the isCurrency algorithm is always called inside a condition.
 
-The value returned by the isCurrency algorithm is also affected by the output of the getAmount function, which is described separately below.
+The value returned by the isCurrency algorithm is also affected by the output of the formatCheck function, which is described separately below.
 
-The algorithm is called whenever the listener is activated by the mouseover event described above.
+The algorithm is called by the [mouseover](#mouseover) event listener described above. Due to the high call frequency of this algorithm, it was designed with an emphasis on maximizing the optimization and efficiency of the *[sieve effect](#terminology)*.
 
 For a better understanding, the diagram below can be used.
 
@@ -686,51 +687,56 @@ For a better understanding, the diagram below can be used.
 Below is the diagram converted into code.
 
 ```javascript
-let isValid = 0
 let fullValue = currentElement?.innerText
 
 if(fullValue){
-    fullValue = fullValue.toLowerCase().replace(/\s/g, '')
-    let currencyValue = fullValue.replace(/(\d),(\d)|(\d)\.(\d)/g, '$1$3$2$4')
+    if(/\d/.test(fullValue)){
+        fullValue = fullValue.toLowerCase().replace(/\s/g, '')
 
-    currencyValue = currencyValue.replace(/[0-9]/g, "")
-    fullValue = fullValue.replace(currencyValue, '')
+        let currencyValue = fullValue.replace(/(\d),(\d)|(\d)\.(\d)/g, '$1$3$2$4')
+        currencyValue = currencyValue.replace(/[0-9]/g, '')
 
-    if(fullValue != "" && !isZero(fullValue)){
-        for(let i = 0; i < currencies.length; i++) {
-            const { ticker, symbol } = currencies[i];
+        fullValue = fullValue.replace(currencyValue, '')          
 
-            if(symbol.includes(currencyValue)){
-                if(ticker != "btc"){
-                    currency = ticker
-                    preferredCurrency = currency
-                    ammount = getAmount(fullValue)
+        if(!isZero(fullValue)){
+            let symbol
+
+            for(let i = 0; i < currencies.length; i++) {
+                symbol = currencies[i].symbol
                     
-                    if(!isNaN(ammount)){
-                        isValid = 1
+                if(symbol.includes(currencyValue)){
+                    if(currencies[i].ticker != "btc"){
+                        if(formatCheck(fullValue)){
+                            currency = currencies[i].ticker
+                            preferredCurrency = currency                              
+
+                            return 1
+                        }
+
+                        return 0
                     }
+
+                    //???
+
+                    return 0
                 }
-                else{
-                    //???...
-                }
-    
-                return isValid
             }
         }
+        
     }
 }
 
-return isValid
+return 0
 
 
 //script.js line 575
 ```
 
+*Describe the different phases of the isCurrency algorithm...*
 
 
 
-
-#### getAmount
+#### formatCheck
 
 
 
@@ -777,7 +783,7 @@ obj.statusCode = bitcoinValue.statusCode
 return obj
 
 
-//script.js line 737
+//script.js line 774
 ```
 
 The initialization of the *statusCode* variable below can be confusing, so I decided to explain it in more detail.
@@ -786,7 +792,7 @@ The initialization of the *statusCode* variable below can be confusing, so I dec
 obj.statusCode = (bitcoinValue.statusCode + fiatValue.statusCode) / 2
 
 
-//script.js line 745
+//script.js line 782
 ```
 
 If the error evaluation successfully reaches the initialization phase above, the statusCode value is set as a proportion of the sum of the status codes from the CoinCap API 2.0 call that provides information about the bitcoin price and exchange rates of the selected currency. The above formula ensures that if both CoinCap API 2.0 calls are successful (i.e., both status codes are 200), the resulting statusCode value will be 200. However, if one of the calls ends with an error, the result will not be 200.
@@ -813,7 +819,7 @@ else{
 }
 
 
-//script.js line 707
+//script.js line 744
 ```
 
 
