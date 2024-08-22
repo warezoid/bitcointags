@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Bitcointags",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "A browser extension that converts fiat price to bitcoins.",
   "action": {
     "default_icon": {

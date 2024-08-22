@@ -757,6 +757,62 @@ CurrencyValue:  $
 
 #### formatCheck
 
+#### Simple algorithms
+Simple algorithms are parts of code that are not extensive and perform basic tasks. For the sake of optimization, I tried to avoid large if-else trees and therefore many times resorted to the more complex path of logic and mathematics instead of simple conditions.
+
+**isZero**
+IsZero determines whether a string value is equal to zero in any format. Because of possible parsing errors, I chose this approach. The code for the isZero algorithm is shown below.
+
+```javascript
+const isZero = (value) => {  
+    let regex = /\d/
+
+    if(regex.test(value.replace(/0/g, ''))){
+        return 0
+    }
+
+    return 1
+}
+
+
+//script.js line 622
+```
+
+The isZero algorithm tests whether the input text contains arbitrary numbers after removing all zeros from the text string. If so, the text is not just zero. If not, the text contained only zeros.
+
+
+**getCount**
+The getCount algorithm returns the number of occurrences of a particular character in the specified text. The function was created because JavaScript does not offer a direct solution to this problem.
+
+This algorithm uses the following formula:
+
+```
+output = x - y
+```
+
+where:
+
+```
+x = the original length of the specified text string
+y = length of the text string after removing the search character
+```
+
+Below you can find the formula converted to JavaScript code.
+
+```javascript
+const getCount = (fullValue, char) => {
+    return fullValue.length - fullValue.replace(new RegExp(`\\${char}`, 'g'), '').length
+}
+
+
+//script.js line 714
+```
+
+
+**toSats**
+
+
+
 
 
 ### Graphic.
