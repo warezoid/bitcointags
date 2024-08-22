@@ -732,8 +732,27 @@ return 0
 //script.js line 575
 ```
 
-*Describe the different phases of the isCurrency algorithm...*
+Below is a diagram that describes the work with variables in detail.
 
+![Work with variables in isCurrency algorithm diagram.](img/diagram_8.svg)
+
+Below is an example of the sequential formatting of the *fullValue* and *currencyValue* variables according to the above diagram. The input value is **9,999.99 $**.
+
+```
+Input:          9,999.99 $
+↓
+FullValue:      9,999.99$
+CurrencyValue:  null
+↓
+FullValue:      9,999.99$
+CurrencyValue:  999999$
+↓
+FullValue:      9,999.99$
+CurrencyValue:  $
+↓
+FullValue:      9,999.99
+CurrencyValue:  $
+```
 
 
 #### formatCheck
