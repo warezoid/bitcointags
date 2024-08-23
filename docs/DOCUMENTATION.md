@@ -128,6 +128,7 @@ let data = {
 Bitcointags uses two different CoinCap API 2.0 endpoints. From one endpoint it gets bitcoin price information, while from the other endpoint it gets fiat currency data. The two endpoints and the types of data that can be retrieved from them are described below.
 
 **Bitcoin price data**
+
 The bitcoin price information is obtained from the *assets/bitcoin* endpoint. The specific data and its description are given below.
 
 ```
@@ -141,6 +142,7 @@ The bitcoin price information is obtained from the *assets/bitcoin* endpoint. Th
 "**Status code**" is the HTTP status code returned by the CoinCap API 2.0. This code is used when displaying a *tag*, either normal or error. For more information on status codes, please visit the [CoinCap API 2.0 documentation](https://docs.coincap.io). For details on the use of status codes in Bitcointags, see the [Errors](#errors) section.
 
 **Fiat price data**
+
 Information about fiat currencies is obtained from the *rates/"CURRENCY_ID"* endpoint. Currency IDs are contained in the **apiCode** variable for each currency supported by Bitcointags. We would choose the endpoint *rates/euro* to call the CoinCap API 2.0 to get information about euros. The specific details and their description are given below.
 
 ```
@@ -224,6 +226,7 @@ const fullCall = async () => {
 ```
 
 **Full call**
+
 FullCall is called once per minute and is considered the main CoinCap API 2.0 call. It has the functionality to capture and pass information about the occurrence of an error and retrieves financial information about all currencies by cycling CoinCap API 2.0 calls for each currency in the *[list of currencies](#supported-currencies)* separately. Below you will find the code to call for information on fiat currencies.
 
 ```javascript
@@ -258,6 +261,7 @@ setData(workingArray)
 ```
 
 **Partial call**
+
 The *partialCall* is made every 15 seconds and is considered a CoinCap API 2.0 update call. Errors are intentionally ignored and wait for the *fullCall* error to be acknowledged. If *fullCall* logs an error but *partialCall* goes through fine, the program discards the error and continues.
 
 Only the preferred currency is called from the currency list. This is the currency that was last used on the page when Bitcointags succeeded. It is assumed that there will not be multiple currencies on a single page. If there are multiple currencies on a page, Bitcointags handles this by using values from *fullCall* that are at most a minute old.
@@ -293,6 +297,7 @@ if(preferredCurrency != ""){
 
 
 **Note**
+
 At the same time, when the CoinCap API 2.0 is called for the first time, the event listener are pinned to the window and document, which are important for the further functioning of Bitcointags. The first listener is described in more detail in the [DOM structure monitoring](#dom-structure-monitoring) section. The second listener, which responds to the mouse leaving the page, triggers a function that renders the tag invisible from the page.
 
 
@@ -349,9 +354,11 @@ To better understand the code above, the following diagram can be used.
 ![Mouseover event listener diagram.](img/diagram_2.svg)
 
 **Element repetition check**
+
 Each time the listener of the mouseover event is activated, the current and previous HTML elements are set to check if they are not the same. This is to ignore the situation where the user moves the mouse cursor in the nested HTML element area. This addresses the repeated display of the tag. This is both a slight optimization and a graphically better solution.
 
 **Problem of sibling elements**
+
 Bitcointags contain a loop that is triggered if the first query of the isCurrency function fails. This loop solves the problem of sibling HTML elements that contain a split price for a product or service. The solution is implemented by a loop that is repeated five times along with the first query of the isCurrency function. With each repetition, the current element is set as the parent element of the previous element, thus gradually ascending the hierarchical structure of the document. The issue can be understood by following the example code below.
 
 ```html
@@ -478,6 +485,7 @@ The diagram below can be used to show the time continuity between the activities
 For better clarity I have decided to describe the individual operations separately.
 
 **Data storage**
+
 Data is stored via the Chrome Storage API. I chose synchronous storage, which unlike local storage is available in all browsers where you are logged in with the same account. For more information, see the official [Chrome Storage API documentation](https://developer.chrome.com/docs/extensions/reference/api/storage).
 
 The data that is stored in the synchronous storage under the *bitcointagsConfig* key is used to modify the tag view. Below is the structure of the object that is stored in the synchronous repository.
@@ -506,6 +514,7 @@ chrome.storage.sync.set({"bitcointagsConfig": obj}, () => {
 ```
 
 **Intercommunication**
+
 Intercommunication can be understood as the process of exchanging information about newly stored data and data needed for the checksum process between the GUI and the content script.
 
 The GUI initiates the communication by sending a message to the content script using the Chrome Tabs API about the newly saved data. The content script receives the message and retrieves the current data from the synchronous storage. This is followed by the data update process, which is described in more detail in the [Loading data](#loading-data) section, and the checksum process, which is described below.
@@ -543,6 +552,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 ```
 
 **Checksum process**
+
 The Checksum process is used to check whether the new data has been correctly stored in the synchronous storage and whether Bitcointags are using the current data.
 
 It works by creating a digital fingerprint of the data object retrieved from the synchronous storage after receiving a message about the newly stored data and comparing it with the digital fingerprint of the data that was stored in the synchronous storage before the message was sent. Digital fingerprint in this context means the output of the SHA-1 hashing function, hereafter referred to as *hash*. To create the hash, the *getHash* function is called, which is part of both the GUI and the content script.
@@ -869,6 +879,7 @@ More than two formatting characters ->  Same characters                         
 An important role in the formatCheck algorithm is played by the separatorCheck function, which is described below.
 
 **SeparatorCheck function**
+
 ...
 
 
@@ -930,6 +941,7 @@ const getCount = (fullValue, char) => {
 
 
 **toSats**
+
 ...
 
 
@@ -949,6 +961,7 @@ The *Errors* section focuses on logging errors and their possible handling in th
 In the content script, errors are logged to the *statusCode* variable during the API call. This topic is already described above in the [Getting the financial data](#getting-the-financial-data) section and therefore will not be discussed further here.
 
 **Error evaluation**
+
 Error evaluation begins after a successful call to the [isCurrency algorithm](#iscurrency) during tag generation. Two error conditions can occur in the content script. The difference is whether the error occurred during the first API call.
 
 If so, the data from the API was not successfully retrieved, and therefore the values needed to convert the price to bitcoins are not available, resulting in Bitcointags having nothing to display and therefore an error tag. If the error did not occur on the first API call, Bitcointags work with data that was received before the error occurred. They will alert you to this condition by graying out the Bitcoin logo when the tag is displayed.
@@ -993,6 +1006,7 @@ obj.statusCode = (bitcoinValue.statusCode + fiatValue.statusCode) / 2
 If the error evaluation successfully reaches the initialization phase above, the statusCode value is set as a proportion of the sum of the status codes from the CoinCap API 2.0 call that provides information about the bitcoin price and exchange rates of the selected currency. The above formula ensures that if both CoinCap API 2.0 calls are successful (i.e., both status codes are 200), the resulting statusCode value will be 200. However, if one of the calls ends with an error, the result will not be 200.
 
 **Final error evaluation**
+
 The above processes are followed by a final evaluation, which is shown in the diagram below.
 
 ![Final error evaluation diagram.](img/diagram_6.svg)
