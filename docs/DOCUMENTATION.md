@@ -756,11 +756,130 @@ CurrencyValue:  $
 
 
 #### formatCheck
+The formatCheck algorithm is a key part of the [isCurrency algorithm](#iscurrency). Due to its complexity, a separate subsection is dedicated to it.
+
+The formatCheck algorithm verifies that the format of the amount for a given product or service matches the Bitcointags specifications. If the format is compatible, the amount variable is set. An important element of this process is the number of formatting dots and commas. Based on these values, their properties, and the values derived from them, the result of the formatCheck algorithm is determined.
+
+The operation of the algorithm is shown in the diagram below.
+
+![FormatCheck algorithm diagram.](img/diagram_9.svg)
+
+Below you can find the code of the entire formatCheck algorithm.
+
+```javascript
+let countOfDots = getCount(fullValue, '.')
+let sum = countOfDots + getCount(fullValue, ',')
+
+if(sum){
+    if(sum == 1){
+        fullValue = fullValue.replace(',', '.')
+
+        if(fullValue.split('.')[1].length == 3){
+            fullValue = fullValue.replace('.', '')
+        }
+
+        ammount = fullValue
+        return 1
+    }
+
+
+    let countOfCommas = sum - countOfDots 
+
+    if(sum == 2){
+        fullValue = fullValue.replace(/,/g, '.')
+        
+        if(!countOfDots || !countOfCommas){
+            if(separatorCheck(fullValue)){
+                fullValue = fullValue.replace(/\./g, '')
+                
+                ammount = fullValue
+                return 1
+            }
+
+            return 0
+        }
+
+        let wVar = fullValue.substring(0, fullValue.lastIndexOf('.'))
+
+        if(separatorCheck(wVar)){               
+            fullValue = fullValue.replace(/\D/, '')
+
+            ammount = fullValue
+            return 1
+        }
+
+        return 0
+    }
+
+    
+    if(!countOfDots || !countOfCommas){
+        fullValue = fullValue.replace(/,/g, '.')
+
+        if(separatorCheck(fullValue)){
+            fullValue = fullValue.replace(/\./g, '')
+            
+            ammount = fullValue
+            return 1
+        }
+
+        return 0
+    }
+
+    if(countOfDots * countOfCommas == sum - 1){
+        let wVar = fullValue.replace(/,/g, '.')
+        wVar = wVar.substring(0, wVar.lastIndexOf('.'))
+
+        if(separatorCheck(wVar)) {
+            wVar = fullValue.replace(/[0-9]/g, '')
+
+            if(getCount(wVar, wVar[wVar.length - 1]) == 1){
+                fullValue = fullValue.replace(/,/g, '.')
+                ammount = fullValue.replace(/\.(?=.*\.)/g, '')
+
+                return 1
+            }
+        }
+    }
+
+    return 0
+}
+
+ammount = fullValue
+return 1
+
+
+//script.js line 632
+```
+
+The formatCheck algorithm can also be better understood by analyzing individual cases that may occur. The key variable in this process is the total **number of formatting characters**.
+
+```
+Without formatting characters       ->  -                                       ->  -                                       ->  x
+---
+One formatting characters           ->  Decimal character                       ->  -                                       ->  x.xx
+                                    ->  Thousand separator                      ->  -                                       ->  xxx.xxx
+---
+Two formatting characters           ->  Same characters                         ->  Thousand separator                      ->  xxx.xxx.xxx
+                                    ->  Different characters                    ->  Thousand separator with decimal place   -> x,xxx.xx
+---
+More than two formatting characters ->  Same characters                         ->  Thousand separator                      ->  xxx.xxx.xxx.xxx
+                                    ->  Thousand separators with decimal place  ->  -                                       ->  xxx,xxx,xxx.xx
+```
+
+An important role in the formatCheck algorithm is played by the separatorCheck function, which is described below.
+
+**SeparatorCheck function**
+...
+
+
+
+
 
 #### Simple algorithms
 Simple algorithms are parts of code that are not extensive and perform basic tasks. For the sake of optimization, I tried to avoid large if-else trees and therefore many times resorted to the more complex path of logic and mathematics instead of simple conditions.
 
 **isZero**
+
 IsZero determines whether a string value is equal to zero in any format. Because of possible parsing errors, I chose this approach. The code for the isZero algorithm is shown below.
 
 ```javascript
@@ -782,6 +901,7 @@ The isZero algorithm tests whether the input text contains arbitrary numbers aft
 
 
 **getCount**
+
 The getCount algorithm returns the number of occurrences of a particular character in the specified text. The function was created because JavaScript does not offer a direct solution to this problem.
 
 This algorithm uses the following formula:
@@ -810,7 +930,7 @@ const getCount = (fullValue, char) => {
 
 
 **toSats**
-
+...
 
 
 
