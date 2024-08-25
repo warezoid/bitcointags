@@ -27,6 +27,7 @@ This document describes the technically key parts of the Bitcointags program. I 
             - [GUI](#gui)
     - [Algorithms](#algorithms)
         - [IsCurrency](#iscurrency)
+        - [FormatCheck](#formatcheck)
     - [Graphic](#graphic)
     - [Errors](#errors)
         - [Content script](#content-script)
@@ -72,7 +73,7 @@ const currencies = [
 ]
 
 
-//script.js line 365
+//script.js line 372
 ```
 
 "**Currencies**" is an array of objects. Each object represents an individual currency, structured as follows:
@@ -187,7 +188,7 @@ const apiCall = async () => {
 }
 
 
-//script.js line 385
+//script.js line 392
 ```
 
 
@@ -410,7 +411,7 @@ loadingContainer.style.opacity = "1"
 loadingContainer.style.animation = ""
 
 
-//script.js line 776
+//script.js line 812
 ```
 
 
@@ -435,7 +436,7 @@ tag.style.left = `${e.pageX}px`
 tag.style.top = `${e.pageY}px`
 
 
-//script.js line 800
+//script.js line 836
 ```
 
 
@@ -880,9 +881,47 @@ An important role in the formatCheck algorithm is played by the separatorCheck f
 
 **SeparatorCheck function**
 
-...
+The separatorCheck function verifies the compatibility of thousand separators with the Bitcointags format. The function splits the input string into individual elements according to the thousand separators and stores these elements in an array. Then the check conditions are executed:
+
+1. The first element of the array (the highest order) must contain less than 4 characters.
+2. Each subsequent element of the array (the second through nth entries) must have exactly three characters.
+
+The following diagram visualizes the procedure of the separatorCheck function.
+
+```
+1,234,567 $
+↓
+1,234,567
+↓
+["1", "234", "567"]
+↓
+Does "1" contain less than 4 characters?
+↓
+Does "234" contain 3 characters?
+↓
+Does "567" contain 3 characters?
+```
+
+Below you can find the code for the separatorCheck function.
+
+```javascript
+let wVar = value.split('.')  
+
+if(wVar[0].length <= 3){
+    for(let i = 1; i < wVar.length; i++){
+        if(wVar[i].length != 3){
+            return 0
+        }
+    }
+
+    return 1
+}
+
+return 0
 
 
+//script.js line 718
+```
 
 
 
