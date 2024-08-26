@@ -28,6 +28,7 @@ This document describes the technically key parts of the Bitcointags program. I 
     - [Algorithms](#algorithms)
         - [IsCurrency](#iscurrency)
         - [FormatCheck](#formatcheck)
+        - [Simple algorithms](#simple-algorithms)
     - [Graphic](#graphic)
     - [Errors](#errors)
         - [Content script](#content-script)
@@ -979,10 +980,57 @@ const getCount = (fullValue, char) => {
 ```
 
 
-**toSats**
+**toSats & toBtc**
+The toSats and toBtc functions were introduced to eliminate inaccuracies that arise in the numeric operations of converting between bitcoins and satoshi. These operations primarily involve dividing and multiplying a value by 100 million. The toSats and toBtc functions ensure the accuracy of calculations by performing division and multiplication of text strings to avoid rounding errors associated with numeric value-level operations.
 
-...
+The toSats function, which replaces the division operation with 100 million, is shown below.
 
+```javascript
+let result = "0"
+
+if(!isZero(input)){
+    result = input.replace('.', '')
+    
+    if(!Number(result[0])){
+        let replaceText = "0"
+        
+        for(let i = 1; i < result.length; i++){
+            if(!Number(result[i])){
+                replaceText += '0' 
+                continue
+            }
+
+            break
+        }
+
+        result = result.replace(replaceText, '')
+    }
+}
+    
+return result
+
+
+//script.js line 948, popup.js line 410
+```
+
+On the other hand, the function toBtc, which replaces the numeric operation of multiplication by 100 million, is shown below.
+
+```javascript
+let result = "0"
+
+if(!isZero(input)){
+    if(input.length < 9){
+        input = `${"0".repeat(9 - input.length)}${input}`
+    }
+
+    result = `${input[0]}.${input.slice(1)}`
+}
+
+return result
+
+
+//popup.js line 477
+```
 
 
 
