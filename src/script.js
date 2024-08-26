@@ -99,6 +99,7 @@ style.textContent = `
         width: 40px;
         height: 40px;
         padding-left: 10px;
+        align-self: none;
     }
 
     .bitcointags-main-textContainer{
