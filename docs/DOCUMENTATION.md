@@ -981,6 +981,7 @@ const getCount = (fullValue, char) => {
 
 
 **toSats & toBtc**
+
 The toSats and toBtc functions were introduced to eliminate inaccuracies that arise in the numeric operations of converting between bitcoins and satoshi. These operations primarily involve dividing and multiplying a value by 100 million. The toSats and toBtc functions ensure the accuracy of calculations by performing division and multiplication of text strings to avoid rounding errors associated with numeric value-level operations.
 
 The toSats function, which replaces the division operation with 100 million, is shown below.
