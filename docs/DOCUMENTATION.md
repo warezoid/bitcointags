@@ -30,6 +30,7 @@ This document describes the technically key parts of the Bitcointags program. I 
         - [FormatCheck](#formatcheck)
         - [Simple algorithms](#simple-algorithms)
     - [Graphic](#graphic)
+        - [Display tag](#display-tag)
     - [Errors](#errors)
         - [Content script](#content-script)
         - [GUI](#gui-1)
@@ -1036,7 +1037,71 @@ return result
 
 
 ### Graphic.
+The Graphics section focuses on the technical aspects of graphical elements such as loading animations, tag preparation and display, and other related processes.
+
+This section partially overlaps with the [Errors section](#errors). However, for better clarity, these two sections have been deliberately separated.
+
+
 #### Display tag
+The tag display is a process that starts with the positive logic of the [isCurrency algorithm](#iscurrency) after the [mouseOver](#mouseover) function call. This process involves preparing the tag before displaying it and displaying it afterwards. Below is a flowchart to help navigate the tag display process.
+
+![Display tag diagram.](img/diagram_10.svg)
+
+The code for the generateTag function is shown below. The error handling logic can be found in the [Content scripts subsection](#content-scripts) of the [Errors section](#errors).
+
+```javascript
+currentElement.addEventListener("mousemove", tagMovement)
+
+tag.style.opacity = "1"
+document.head.appendChild(animationStyles)
+
+let compressedData = dataCompression()
+
+if(compressedData.productPrice != null){
+    compressedData.upDown = getChange()
+
+    if(compressedData.statusCode != 200){
+        compressedData.grayscale = "100"
+    }
+
+    updateTag(compressedData)
+}
+else{
+    updateError(compressedData.statusCode)
+}
+
+refreshTimeout = setTimeout(() => {
+    contentContainer.style.animation = "bitcointags-replaceContainers 0.5s forwards"
+}, 60000)
+
+
+//script.js line 737
+```
+
+The updateTag function, shown below, takes care of updating the tag before it is displayed.
+
+```javascript
+let {grayscale, upDown, bitcoinPrice} = compressedData
+
+btctgsLogo.style.filter = `grayscale(${grayscale}%)`
+btctgsPriceContainer.style.color = `#${upDown}`
+
+btctgsBtcprice.innerText = `${addSpacing(parseInt(bitcoinPrice))}`
+
+let {unit, productPrice} = getUnitValues(compressedData.productPrice)
+
+btctgsPrice.innerText = productPrice
+btctgsUnit.innerText = unit
+btctgsCurrency.innerText = currency.toUpperCase()
+
+mainContainer.style.opacity = "1"
+continueLoading = 0
+
+
+//script.js line 908
+```
+
+
 #### Loading animation
 #### Switching scenes
 

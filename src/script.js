@@ -758,7 +758,6 @@ const generateTag = () => {
     refreshTimeout = setTimeout(() => {
         contentContainer.style.animation = "bitcointags-replaceContainers 0.5s forwards"
     }, 60000)
-
 }
 
 const dataCompression = () => {
