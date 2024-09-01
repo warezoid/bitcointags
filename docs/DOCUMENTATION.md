@@ -3,7 +3,9 @@
 
 
 ## Abstract
-This document describes the technically key parts of the Bitcointags program. I have tried to select parts that might cause confusion for other developers when developing Bitcointags. An [overview of contents](#table-of-contents) can be found below. For practical information, the [README.md](../README.md) file can be visited.
+This document provides a technical description of the key parts of Bitcointags. [Table of Contents](#table-of-contents) can be found below. For practical information, I recommend visiting the [README.md file](../README.md).
+
+
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -41,8 +43,17 @@ This document describes the technically key parts of the Bitcointags program. I 
 
 
 ## Introduction
+Bitcointags is a web extension that converts the price of a product or service in the selected element to the current value in bitcoins. The current price is obtained through periodic queries to the CoinCap API 2.0, which provides financial data on bitcoin and fiat currency exchange rates. At the same time, event listeners are attached to the page to provide element selection, tag movement, and other features. The algorithms associated with these operations and other key principles are described in detail below.
+
+
 
 ## Contact
+For questions, comments, or suggestions for improvements, feel free to contact me via the **Issues tab on GitHub** or the **email below**.
+
+```
+warezoid@proton.me
+```
+
 
 
 ## Terminology
@@ -1037,7 +1048,7 @@ return result
 
 
 ### Graphic.
-The Graphics section focuses on the technical aspects of graphical elements such as loading animations, tag preparation and display, and other related processes.
+The Graphics section focuses on the technical aspects of graphical elements such as tag preparation and display, and other related processes.
 
 This section partially overlaps with the [Errors section](#errors). However, for better clarity, these two sections have been deliberately separated.
 
@@ -1100,10 +1111,6 @@ continueLoading = 0
 
 //script.js line 908
 ```
-
-
-#### Loading animation
-#### Switching scenes
 
 
 
