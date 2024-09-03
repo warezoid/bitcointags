@@ -810,27 +810,29 @@ const getChange = () => {
 }
 
 const removeTag = () => {
-    currentElement.removeEventListener("mousemove", tagMovement)
-    currentElement.removeEventListener("mouseleave", removeTag)
-    
-    tag.style.opacity = "0"
-    
-    clearTimeout(refreshTimeout)
-    
-    if(document.head.contains(animationStyles)){
-        document.head.removeChild(animationStyles)
+    if(currentElement){
+        currentElement.removeEventListener("mousemove", tagMovement)
+        currentElement.removeEventListener("mouseleave", removeTag)
+        
+        tag.style.opacity = "0"
+        
+        clearTimeout(refreshTimeout)
+        
+        if(document.head.contains(animationStyles)){
+            document.head.removeChild(animationStyles)
+        }
+        
+        continueLoading = 1
+        
+        contentContainer.style.opacity = "0"
+        contentContainer.style.animation = ""
+        
+        mainContainer.style.opacity = "0"
+        errorContainer.style.opacity = "0"
+        
+        loadingContainer.style.opacity = "1"
+        loadingContainer.style.animation = ""
     }
-    
-    continueLoading = 1
-    
-    contentContainer.style.opacity = "0"
-    contentContainer.style.animation = ""
-    
-    mainContainer.style.opacity = "0"
-    errorContainer.style.opacity = "0"
-    
-    loadingContainer.style.opacity = "1"
-    loadingContainer.style.animation = ""
 }
 
 const tagMovement = (e) => {

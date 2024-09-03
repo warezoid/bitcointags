@@ -401,27 +401,29 @@ The mouseleave event listener is attached to the current element that has passed
 Below you can find the code of the removeTag function.
 
 ```javascript
-currentElement.removeEventListener("mousemove", tagMovement)
-currentElement.removeEventListener("mouseleave", removeTag)
-
-tag.style.opacity = "0"
-
-clearTimeout(refreshTimeout)
-
-if(document.head.contains(animationStyles)){
-    document.head.removeChild(animationStyles)
+if(currentElement){
+    currentElement.removeEventListener("mousemove", tagMovement)
+    currentElement.removeEventListener("mouseleave", removeTag)
+    
+    tag.style.opacity = "0"
+    
+    clearTimeout(refreshTimeout)
+    
+    if(document.head.contains(animationStyles)){
+        document.head.removeChild(animationStyles)
+    }
+    
+    continueLoading = 1
+    
+    contentContainer.style.opacity = "0"
+    contentContainer.style.animation = ""
+    
+    mainContainer.style.opacity = "0"
+    errorContainer.style.opacity = "0"
+    
+    loadingContainer.style.opacity = "1"
+    loadingContainer.style.animation = ""
 }
-
-continueLoading = 1
-
-contentContainer.style.opacity = "0"
-contentContainer.style.animation = ""
-
-mainContainer.style.opacity = "0"
-errorContainer.style.opacity = "0"
-
-loadingContainer.style.opacity = "1"
-loadingContainer.style.animation = ""
 
 
 //script.js line 812
@@ -449,7 +451,7 @@ tag.style.left = `${e.pageX}px`
 tag.style.top = `${e.pageY}px`
 
 
-//script.js line 836
+//script.js line 838
 ```
 
 
@@ -1023,7 +1025,7 @@ if(!isZero(input)){
 return result
 
 
-//script.js line 948, popup.js line 410
+//script.js line 950, popup.js line 410
 ```
 
 On the other hand, the function toBtc, which replaces the numeric operation of multiplication by 100 million, is shown below.
@@ -1109,7 +1111,7 @@ mainContainer.style.opacity = "1"
 continueLoading = 0
 
 
-//script.js line 908
+//script.js line 910
 ```
 
 
