@@ -24,9 +24,17 @@ Bitcointags is a browser extension that converts the fiat price of a product or 
 
 
 
+<hr>
+
+
+
 ## Coming soon...
 - Select&convert mode.
 - It tells you whether the e-shop accepts bitcoins.
+
+
+
+<hr>
 
 
 
@@ -35,10 +43,24 @@ Bitcointags is licensed under the MIT license. The full text of the license can 
 
 
 
+<hr>
+
+
+
 ## Installation
 Bitcointags are available for browsers with the [**Chromium core**](https://www.chromium.org) (Google Chrome, Microsoft Edge, Opera...) and [**Mozilla Firefox**](https://www.mozilla.org/en-US/firefox).
 
 You can add Bitcointags for **Firefox** via the **official Mozila add-ons** or as a **temporary add-on**. Bitcointags is **not yet available** in the [Chrome Web Store](https://chromewebstore.google.com/) and I **won't personally add** Bitcointags to the Chrome Web Store. The reason can be found in the [FAQ](#faq) section. Still, Bitcointags can be added to the Chrome browser using the **developer mode** for Chromium browsers.
+
+**Alert!**
+
+After adding Bitcointags to your browser, you may need to enable the **"Access your data for all websites"** feature, otherwise Bitcointags will not work. In Mozilla Firefox, you can enable this option for Bitcointags in the *"Permissions"* tab at the URL below.
+
+```
+about:addons
+```
+
+!["Data access for all websites" box](./docs/img/permissionsControl_1.png)
 
 To add the Bitcointags extension as a **temporary add-on** or through **developer mode**, you will need the Bitcointags source files. The following guide outlines the steps to download these files and modify them for use in your browser.
 
@@ -81,8 +103,6 @@ To add a temporary add-on, follow the **[official documentation](https://extensi
 - The temporary add-on will only be in Firefox until you **delete** it or **turn off the browser**. 
 - If you have **successfully loaded** the temporary add-on to Firefox, but Bitcointags is **not responding**. Check if you have **enabled** Bitcointags to **[run in private windows](https://support.mozilla.org/en-US/kb/extensions-private-browsing).**
 
-
-
 ### Chromium browsers
 Bitcointags is **not yet available** in the [Chrome Web Store](https://chromewebstore.google.com/) and I **won't personally add** Bitcointags to the Chrome Web Store. The reason can be found in the [FAQ](#faq) section. Still, Bitcointags can be added to the Chrome browser using the **developer mode** for Chromium browsers.
 
@@ -111,6 +131,10 @@ Find **Developer mode** and if it is not activated, activate it.
 After that click the **Load unpacked** button and select the **src** folder you downloaded and edited earlier.
 
 #### 4. Bitcointags for Chromium browsers is ready to use.
+
+
+
+<hr>
 
 
 
@@ -149,10 +173,7 @@ Clicking on the GitHub logo will **redirect you** to the Bitcointags **repositor
 
 
 
-
-
-
-
+<hr>
 
 
 
@@ -197,6 +218,10 @@ Error message is a **short description** of the error. The message should help i
 
 
 
+<hr>
+
+
+
 ## FAQ
 - ***Something I would like to change about Bitcointags. What about it?***
     - I'd like the project to evolve with community involvement over time. That's why I'm open to collaboration, discussions, adding new features and so on. If you have ideas, questions or anything you would like to contribute or discuss regarding Bitcointags, feel free to share them in the discussion.
@@ -215,6 +240,13 @@ Error message is a **short description** of the error. The message should help i
 
 - ***Bitcointags often throw me a 999 error, what should I do?***
     - If Bitcointags frequently get a 999 error, it may be due to a [CORS](https://wikipedia.org/wiki/Cross-origin_resource_sharing) problem. This error is server-side API and fixing it for the version 3 manifest is complicated and would slow down Bitcointags. Additionally, the [CORS](https://wikipedia.org/wiki/Cross-origin_resource_sharing) issue only ever occurs. Therefore, I decided not to address this bug for now and will focus on it if it becomes a more frequent problem.
+
+- ***Bitcointags when added from Mozilla Add-ons do not work. What to do?***
+    - If you see a small colored dot next to the Bitcointags icon in your browser's navigation bar, it means you need to enable the **"Access your data for all websites"** feature. The way to do this can be found at the beginning of the [Installation section](#installation).
+
+<hr>
+
+
 
 ## Sources
 Sources can be seen as links to products used in Bitcointags, including APIs, graphics, research tools, and of course Bitcoin, without which this project and many others would not exist. I have chosen not to list elementary products such as HTML, CSS, JavaScript, and many others.
@@ -241,6 +273,10 @@ Sources can be seen as links to products used in Bitcointags, including APIs, gr
     - Stack Overflow: [stackoverflow.com](https://stackoverflow.com)
     - DeepL: [deepl.com](https://www.deepl.com)
     - And the internet itself.
+
+
+
+<hr>
 
 
 
