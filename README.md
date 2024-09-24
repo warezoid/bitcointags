@@ -25,7 +25,6 @@ Bitcointags is a browser extension that converts the fiat price of a product or 
 
 
 ## Coming soon...
-- Fix CORS bug.
 - Select&convert mode.
 - It tells you whether the e-shop accepts bitcoins.
 
@@ -213,6 +212,9 @@ Error message is a **short description** of the error. The message should help i
 
 - ***The GUI got stuck when loading an animation. What should I do?***
     - If you have migrated from version 1.1.14 or earlier to version 1.1.15 or later, you may experience the problem listed above. The solution is to type the "clearsync" when you launch the GUI. If the operation is successful, the loading animation will complete and the window will close automatically. After restarting, the application should work properly. You can use this procedure at any time, but keep in mind that it will clear the synchronized storage, which will result in the loss of your settings for Bitcointags. More information on this topic can be found in the [documentation](./docs/DOCUMENTATION.md), in the [Errors section](./docs/DOCUMENTATION.md#errors).
+
+- ***Bitcointags often throw me a 999 error, what should I do?***
+    - If Bitcointags frequently get a 999 error, it may be due to a [CORS](https://wikipedia.org/wiki/Cross-origin_resource_sharing) problem. This error is server-side API and fixing it for the version 3 manifest is complicated and would slow down Bitcointags. Additionally, the [CORS](https://wikipedia.org/wiki/Cross-origin_resource_sharing) issue only ever occurs. Therefore, I decided not to address this bug for now and will focus on it if it becomes a more frequent problem.
 
 ## Sources
 Sources can be seen as links to products used in Bitcointags, including APIs, graphics, research tools, and of course Bitcoin, without which this project and many others would not exist. I have chosen not to list elementary products such as HTML, CSS, JavaScript, and many others.
