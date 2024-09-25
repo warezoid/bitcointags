@@ -14,7 +14,7 @@ style.textContent = `
         top: 0;
         left: 0;
         opacity: 0;
-        z-index: 1000;
+        z-index: 2000000000;
     }
 
     #bitcointags-mainContainer{
@@ -117,7 +117,7 @@ style.textContent = `
     }
     
     .bitcointags-main-goodsPriceContainer *{
-        font-family: Bakbak One, sans-serif;
+        font-family: Bakbak One, sans-serif !important;
         font-size: 28px;
         color: #ffffff;
     }
@@ -136,7 +136,7 @@ style.textContent = `
     }
 
     #bitcointags-main-btcPriceContainer *{
-        font-family: Bakbak One, sans-serif;
+        font-family: Bakbak One, sans-serif !important;
         font-size: 18px;
     }
 
@@ -156,7 +156,7 @@ style.textContent = `
     }
     
     #bitcointags-error-container *{
-        font-family: Bakbak One, sans-serif;
+        font-family: Bakbak One, sans-serif !important;
         color: #da1e37;
     }
 
