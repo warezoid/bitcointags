@@ -561,7 +561,7 @@ const getHash = async (input) => {
     3. Research tools
         3.1. ChatGPT: [ chatgpt.com ]
         3.2. Stackoverflow: [ stackoverflow.com ]
-        3.3. DeepL: [ https://www.deepl.com ]
+        3.3. DeepL: [ deepl.com ]
         3.4. And the internet itself.
 
 */

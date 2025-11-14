@@ -1,3 +1,11 @@
+**Bitcointags are currently not working due to a change at the API provider (CoinCap). The entire logic of the API call will have to be changed. We apologize for the inconvenience.**
+
+
+
+<hr>
+
+
+
 # Bitcointags
 Bitcointags is a browser extension that converts the fiat price of a product or service within a selected HTML entity into an approximate bitcoin price.
 
