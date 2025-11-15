@@ -1,0 +1,23 @@
+{
+  "name": "api-server-package",
+  "version": "1.0.0",
+  "description": "Intermediary between CoinCap API and Bitcointags.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warezoid/bitcointags/src/api_server"
+  },
+  "keywords": [
+    "API",
+    "CoinCap",
+    "Bitcointags",
+    "warezoid",
+    "bitcoin",
+    "extension"
+  ],
+  "author": "warezoid",
+  "license": "MIT"
+}
