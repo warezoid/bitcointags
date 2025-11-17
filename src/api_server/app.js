@@ -1,54 +1,98 @@
+/*
+    - domain: api.bitcointags.warezoid.com
+
+    - call coincap api every 12 minutes (720 s = 720 000 ms)
+        - collect all data
+    - then trim data (only use information used in bitcointags)
+    - then post them at get url
+
+*/
+
+
+
 const dotenv = require('dotenv')
+const express = require('express')
+const app = express()
+const port = process.env.PORT || 3000
+
+const currencies = [
+    {ticker: "czk", apiCode: "czech-republic-koruna"},
+    {ticker: "eur", apiCode: "euro"},
+    {ticker: "jpy", apiCode: "japanese-yen"},
+    {ticker: "gbp", apiCode: "british-pound-sterling"}
+]
+
+
+
 dotenv.config()
 
 
 
-let f
-let btc
-let fiat
-
-const callApi = async () => {
-    f = await fetch("https://rest.coincap.io/v3/assets/bitcoin", {
-        headers: {
-            "accept": "application/json",
-            "Authorization": `Bearer ${process.env.API_KEY}`
-        }
-    })
-    btc = await f.json()
-
-    console.log(btc);
-
-    f = await fetch("https://rest.coincap.io/v3/rates", {
-        headers: {
-            "accept": "application/json",
-            "Authorization": `Bearer ${process.env.API_KEY}`
-        }
-    })
-    fiat = await f.json()
-
-    console.log(fiat)
+let data = {
+    btc: {
+        change: null,
+        price: null,
+        statusCode: null
+    },
+    fiat: []
 }
 
-callApi()   //THIS CALL TAKE 17 credits
+const createFiat = () => {
+    data.fiat = []
+
+    for(let i = 0; i < currencies.length; i++){
+        data.fiat.push({ticker: currencies[i].ticker, rate: null, statusCode: null})
+    }
+}
+createFiat()
 
 
 
-const express = require('express')
-const app = express()
+let rawData
+let jsonData
 
-const port = 3000
+const callApi = async () => {
+    rawData = await fetch("https://rest.coincap.io/v3/assets/bitcoin", {
+        headers: {
+            "accept": "application/json",
+            "Authorization": `Bearer ${process.env.API_KEY}`
+        }
+    })
+    jsonData = await rawData.json()
+
+    if(rawData.status == 200){
+        data.btc.change = jsonData.data.changePercent24Hr
+        data.btc.price = jsonData.data.priceUsd
+    }
+
+    data.btc.statusCode = rawData.status
+
+
+
+    for(let i = 0; i < currencies.length; i++){
+        rawData = await fetch(`https://rest.coincap.io/v3/rates/${currencies[i].apiCode}`, {
+            headers: {
+                "accept": "application/json",
+                "Authorization": `Bearer ${process.env.API_KEY}`
+            }
+        })
+        jsonData = await rawData.json()      
+
+        if(rawData.status == 200){
+            data.fiat[i].rate = jsonData.data.rateUsd
+        }
+
+        data.fiat[i].statusCode = rawData.status
+    }
+}
+callApi()
+
+
+
+app.get('/data', (req, res) => {
+    res.json(data)
+})
+
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`)
-})
-
-app.get('/', (req, res) => {
-    res.send("Hello world!")
-})
-
-app.get('/btc', (req, res) => {
-    res.json(btc)
-})
-
-app.get('/fiat', (req, res) => {
-    res.json(fiat)
+    console.log(`Server listening on port ${port}.`)
 })
