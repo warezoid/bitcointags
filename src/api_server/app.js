@@ -1,15 +1,3 @@
-/*
-    - domain: api.bitcointags.warezoid.com
-
-    - call coincap api every 12 minutes (720 s = 720 000 ms)
-        - collect all data
-    - then trim data (only use information used in bitcointags)
-    - then post them at get url
-
-*/
-
-
-
 const dotenv = require('dotenv')
 const express = require('express')
 const app = express()
@@ -66,8 +54,8 @@ const callApi = async () => {
     }
 
     data.btc.statusCode = rawData.status
-
-
+ 
+    
 
     for(let i = 0; i < currencies.length; i++){
         rawData = await fetch(`https://rest.coincap.io/v3/rates/${currencies[i].apiCode}`, {
@@ -85,7 +73,14 @@ const callApi = async () => {
         data.fiat[i].statusCode = rawData.status
     }
 }
+
+
+
 callApi()
+
+setInterval(() => {
+    callApi()
+}, 720000)
 
 
 
