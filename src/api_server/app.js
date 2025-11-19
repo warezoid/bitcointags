@@ -43,37 +43,43 @@ let rawData
 let jsonData
 
 const callApi = async () => {
-    rawData = await fetch("https://rest.coincap.io/v3/assets/bitcoin", {
-        headers: {
-            "accept": "application/json",
-            "Authorization": `Bearer ${process.env.API_KEY}`
-        }
-    })
-    jsonData = await rawData.json()
-
-    if(rawData.status == 200){
-        data.btc.change = jsonData.data.changePercent24Hr
-        data.btc.price = jsonData.data.priceUsd
-    }
-
-    data.btc.statusCode = rawData.status
- 
-
-
-    for(let i = 0; i < currencies.length; i++){
-        rawData = await fetch(`https://rest.coincap.io/v3/rates/${currencies[i].apiCode}`, {
+    try{
+        rawData = await fetch("https://rest.coincap.io/v3/assets/bitcoin", {
             headers: {
                 "accept": "application/json",
                 "Authorization": `Bearer ${process.env.API_KEY}`
             }
         })
-        jsonData = await rawData.json()      
+        jsonData = await rawData.json()
 
         if(rawData.status == 200){
-            data.fiat[i].rate = jsonData.data.rateUsd
+            data.btc.change = jsonData.data.changePercent24Hr
+            data.btc.price = jsonData.data.priceUsd
         }
 
-        data.fiat[i].statusCode = rawData.status
+        data.btc.statusCode = rawData.status
+    }catch(err){
+        data.btc.statusCode = 999
+    }
+
+    for(let i = 0; i < currencies.length; i++){
+        try{
+            rawData = await fetch(`https://rest.coincap.io/v3/rates/${currencies[i].apiCode}`, {
+                headers: {
+                    "accept": "application/json",
+                    "Authorization": `Bearer ${process.env.API_KEY}`
+                }
+            })
+            jsonData = await rawData.json()      
+
+            if(rawData.status == 200){
+                data.fiat[i].rate = jsonData.data.rateUsd
+            }
+
+            data.fiat[i].statusCode = rawData.status
+        }catch(err){
+            data.fiat[i].statusCode = 999
+        }
     }
 }
 
