@@ -1,5 +1,7 @@
 const dotenv = require('dotenv')
 const express = require('express')
+const cors = require('cors')
+
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -13,6 +15,7 @@ const currencies = [
 
 
 dotenv.config()
+app.use(cors())
 
 
 
@@ -55,7 +58,7 @@ const callApi = async () => {
 
     data.btc.statusCode = rawData.status
  
-    
+
 
     for(let i = 0; i < currencies.length; i++){
         rawData = await fetch(`https://rest.coincap.io/v3/rates/${currencies[i].apiCode}`, {
