@@ -390,23 +390,12 @@ let currency
 let preferredCurrency = ""
 let apiCallInterval
 
-const apiCall = async () => {
-    let period = 0
-    
+const apiCall = async () => {   
     await fullCall()
 
-    apiCallInterval = setInterval(() => {
-        period++
-
-        if(period >= 4){  
-            fullCall()
-
-            period = 0
-            return
-        }
-        
-        partialCall()
-    }, 15000)
+    apiCallInterval = setInterval(() => {       
+        fullCall()
+    }, 43200000)
 
     document.addEventListener("mouseover", mouseOver)
     window.addEventListener("mouseout", mouseOut)
@@ -414,47 +403,48 @@ const apiCall = async () => {
 
 const fullCall = async () => {
     try{
-        let usdResponse = await fetch(`https://api.coincap.io/v2/assets/bitcoin`)
+        let usdResponse = await fetch(`https://api.coinpaprika.com/v1/tickers/btc-bitcoin`)
 
         if(usdResponse.status == 200){
             let dataApi = await usdResponse.json()
-            let workingArray = []
 
             data.btc = {
-                change: dataApi.data.changePercent24Hr,
-                price: dataApi.data.priceUsd,
+                change: dataApi.quotes.USD.percent_change_24h,
+                price: dataApi.quotes.USD.price,
                 statusCode: usdResponse.status
             }
-                        
-            for(let i = 2; i < currencies.length; i++){
-                let statusCode = 200
-                
-                try{
-                    let fiatResponse = await fetch(`https://api.coincap.io/v2/rates/${currencies[i].apiCode}`)
 
-                    if(fiatResponse.status == 200){
-                        dataApi = await fiatResponse.json()
-            
-                        workingArray.push({currency: currencies[i].ticker, rate: dataApi.data.rateUsd, statusCode})
-    
+            let workingArray = []
+
+            try{
+                let fiatResponse = await fetch(`https://open.er-api.com/v6/latest/USD`)
+
+                if(fiatResponse.status != 200){
+                    throw({text: "badresponse", fiatResponse});
+                }
+
+                dataApi = (await fiatResponse.json()).rates
+
+                for(let i = 2; i < currencies.length; i++){
+                    let ticker = currencies[i].ticker.toUpperCase()
+                    workingArray.push({currency: currencies[i].ticker, rate: 1 / dataApi[ticker], statusCode: fiatResponse.status})
+                }
+            }catch(err){
+                for(let i = 2; i < currencies.length; i++){
+                    if(err.text != null){
+                        workingArray.push({currency: currencies[i].ticker, rate: null, statusCode: err.fiatResponse.status})
                         continue
                     }
                     
-                    statusCode = fiatResponse.status
-                }catch(err) {
-                    statusCode = 999
+                    workingArray.push({currency: currencies[i].ticker, rate: null, statusCode: 999})
                 }
-
-                workingArray.push({currency: currencies[i].ticker, rate: null, statusCode})
             }
             
             setData(workingArray)
-
-            return 
-        }   
+            return
+        }
 
         data.btc.statusCode = usdResponse.status
-
     }catch(err){
         data.btc.statusCode = 999
     }
@@ -478,48 +468,6 @@ const setData = (workingArray) => {
     }
 
     data.fiat = workingArray
-}
-
-const partialCall = async () => {
-    try{
-        let usdResponse = await fetch(`https://api.coincap.io/v2/assets/bitcoin`)
-
-        if(usdResponse.status == 200){
-            let dataApi = await usdResponse.json()
-        
-            data.btc = {
-                change: dataApi.data.changePercent24Hr,
-                price: dataApi.data.priceUsd,
-                statusCode: usdResponse.status
-            }
-
-            if(preferredCurrency != ""){
-                let x = data.fiat.findIndex(c => c.currency == preferredCurrency)
-                let y = currencies.findIndex(c => c.ticker == preferredCurrency)
-
-                if(x > -1){
-                    try{
-                        let fiatResponse = await fetch(`https://api.coincap.io/v2/rates/${currencies[y].apiCode}`)
-
-                        if(fiatResponse.status == 200){
-                            dataApi = await fiatResponse.json()
-
-                            data.fiat[x].rate = dataApi.data.rateUsd
-                            data.fiat[x].statusCode = fiatResponse.status
-
-                            return
-                        }
-                    }catch(err) {
-
-                    }
-                }
-            }
-            
-            return
-        }   
-    }catch(err){
-
-    }
 }
 
 
