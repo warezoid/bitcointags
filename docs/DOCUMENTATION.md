@@ -1,3 +1,11 @@
+**The documentation is out of date. In the Bitcointags code, the structure of the APIs call code has been changed, as well as which APIs are called. Other principles remain unchanged.**
+
+
+
+<hr>
+
+
+
 # Bitcointags documentation
 
 
@@ -1254,7 +1262,8 @@ Sources can be seen as links to products used in Bitcointags, including APIs, gr
     - Other graphical elements used in the Bitcointags project, such as alert and checkmark icon, along with all Bitcointags logos, are also licensed under the [MIT license](https://en.wikipedia.org/wiki/MIT_License) and are free to use.
 
 - **APIs**
-    - CoinCap API 2.0 - used to get the price of bitcoin and rate of fiat currencies: [docs.coincap.io](https://docs.coincap.io)
+    - Coin Paprika API - used to get the price of bitcoin : [coinpaprika.com](https://coinpaprika.com/api/)
+    - ExchangeRate API - used to get the rates of fiat currency : [exchangerate-api.com](https://www.exchangerate-api.com/docs/free)
     - Web Crypto API - used to calculate the checksum: [www.w3.org/TR/WebCryptoAPI](https://www.w3.org/TR/WebCryptoAPI)
     - Chrome APIs
         - Storage API - used to save the user profile: [developer.chrome.com](https://developer.chrome.com/docs/extensions/reference/api/storage)
