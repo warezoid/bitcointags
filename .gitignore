@@ -1,6 +1,6 @@
+src/api_server
+src/api_server/*
 src/api_server/.env
-src/api_server/package.json
-src/api_server/package-lock.json
 node_modules/
 /package-lock.json
 /package.json
